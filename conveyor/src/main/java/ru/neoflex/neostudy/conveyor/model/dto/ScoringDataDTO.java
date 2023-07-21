@@ -1,6 +1,8 @@
 package ru.neoflex.neostudy.conveyor.model.dto;
 
 import lombok.Data;
+import ru.neoflex.neostudy.conveyor.model.types.Gender;
+import ru.neoflex.neostudy.conveyor.model.types.MaritalStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,13 +14,13 @@ public class ScoringDataDTO {
     private String firstName;
     private String lastName;
     private String middleName;
-    private Enum gender;
+    private Gender gender;
     private LocalDate birthdate;
     private String passportSeries;
     private String passportNumber;
     private LocalDate passportIssueDate;
     private String passportIssueBranch;
-    private Enum maritalStatus;
+    private MaritalStatus maritalStatus;
     private Integer dependentAmount;
     private EmploymentDTO employment;
     private String account;
