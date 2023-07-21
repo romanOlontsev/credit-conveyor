@@ -1,11 +1,16 @@
 package ru.neoflex.neostudy.conveyor.model.dto;
 
-import lombok.Data;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class CreditDTO {
     private BigDecimal amount;
     private Integer term;
