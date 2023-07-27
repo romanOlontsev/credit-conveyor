@@ -35,9 +35,8 @@ public class ConveyorControllerImpl implements ConveyorController {
     public ResponseEntity<CreditDTO> calculateCredit(ScoringDataDTO scoringRequest) {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
-            return new ResponseEntity<>(CreditDTO.builder()
-                                                 .term(12)
-                                                 .build(), HttpStatus.OK);
+            CreditDTO credit = service.calculateCredit(scoringRequest);
+            return new ResponseEntity<>(credit, HttpStatus.OK);
         }
         throw new BadRequestException("Bad request");
     }

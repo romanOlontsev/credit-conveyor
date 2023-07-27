@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +22,7 @@ import ru.neoflex.neostudy.conveyor.model.response.ApiErrorResponse;
 
 import java.util.List;
 
-//@Validated
+@Validated
 @RequestMapping("/conveyor")
 public interface ConveyorController {
     @Operation(summary = "Calculation of possible credit conditions")
@@ -45,7 +47,7 @@ public interface ConveyorController {
     ResponseEntity<List<LoanOfferDTO>> generateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-//            @Valid
+            @Valid
             @RequestBody LoanApplicationRequestDTO prescoringRequest
     );
 
@@ -63,7 +65,8 @@ public interface ConveyorController {
                     description = "Invalid request parameters",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ApiErrorResponse.class)))})
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
     @PostMapping(value = "/calculation",
             produces = {"application/json"},
             consumes = {"application/json"})
