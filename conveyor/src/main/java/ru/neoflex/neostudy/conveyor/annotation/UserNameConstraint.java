@@ -17,5 +17,5 @@ public @interface UserNameConstraint {
 
     Class<? extends Payload>[] payload() default {};
 
-    boolean required() default false;
+    boolean required() default true;
 }

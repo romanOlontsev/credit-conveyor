@@ -19,12 +19,10 @@ public class UserNameValidator implements ConstraintValidator<UserNameConstraint
             return false;
         }
         String regex = "^[a-zA-Z]{2,30}$";
-//        BeanWrapper wrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
-//        wrapper.getPropertyValue()
         if (required) {
-            return value.isEmpty() || value.matches(regex);
-        } else {
             return value.matches(regex);
+        } else {
+            return value.isEmpty() || value.matches(regex);
         }
     }
 }
