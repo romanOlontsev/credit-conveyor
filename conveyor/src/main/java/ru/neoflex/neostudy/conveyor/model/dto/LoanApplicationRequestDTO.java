@@ -1,9 +1,11 @@
 package ru.neoflex.neostudy.conveyor.model.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.pl.NIP;
+import ru.neoflex.neostudy.conveyor.annotation.UserAgeConstraint;
 import ru.neoflex.neostudy.conveyor.annotation.UserNameConstraint;
 
 import java.math.BigDecimal;
@@ -26,14 +28,15 @@ public class LoanApplicationRequestDTO {
     @UserNameConstraint(message = "The lastname must contain from 2 to 30 latin characters")
     private String lastName;
 
-    @UserNameConstraint(required = true,
+    @UserNameConstraint(required = false,
             message = "The middle name must be empty or contain from 2 to 30 Latin characters")
     private String middleName;
 
     @NotNull
-    @Pattern(regexp = "[\\w\\.]{2,50}@[\\w\\.]{2,20}", message = "Email must be: example@dog.con")
+    @Pattern(regexp = "^[\\w\\.]{2,50}@[\\w\\.]{2,20}$", message = "Email must be: example@dog.con")
     private String email;
 
+    @UserAgeConstraint(message = "User must be over 18 years of age")
     private LocalDate birthdate;
 
     @NotNull
