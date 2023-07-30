@@ -28,7 +28,7 @@ public class ConveyorControllerImpl implements ConveyorController {
             List<LoanOfferDTO> offers = service.generateOffers(prescoringRequest);
             return new ResponseEntity<>(offers, HttpStatus.OK);
         }
-        throw new BadRequestException("Bad request");
+        throw new BadRequestException("Bad request: Accept=" + accept);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class ConveyorControllerImpl implements ConveyorController {
             CreditDTO credit = service.calculateCredit(scoringRequest);
             return new ResponseEntity<>(credit, HttpStatus.OK);
         }
-        throw new BadRequestException("Bad request");
+        throw new BadRequestException("Bad request: Accept=" + accept);
     }
 }

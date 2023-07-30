@@ -3,16 +3,19 @@ package ru.neoflex.neostudy.conveyor.model.dto;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import ru.neoflex.neostudy.conveyor.annotation.UserAgeConstraint;
 import ru.neoflex.neostudy.conveyor.annotation.UserNameConstraint;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@ToString
 public class LoanApplicationRequestDTO {
     @NotNull
     @DecimalMin(value = "10000", message = "The amount must be greater than or equal to 10000")
