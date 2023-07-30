@@ -73,7 +73,7 @@ public interface ConveyorController {
     ResponseEntity<CreditDTO> calculateCredit(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-//            @Valid
+            @Valid
             @RequestBody ScoringDataDTO scoringRequest
     );
 }

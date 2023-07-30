@@ -50,7 +50,7 @@ public class ScoringRateService {
         int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
                         .getYears();
         if (age < 20 || age > 60) {
-            String exceptionMessage = "Credit denial: Wrong age";
+            String exceptionMessage = "Credit denial: credit is issued from 20 to 60 years";
             throw new ValidationException(exceptionMessage);
         }
     }
@@ -61,7 +61,7 @@ public class ScoringRateService {
         Integer workExperienceCurrent = scoringRequest.getEmployment()
                                                       .getWorkExperienceCurrent();
         if (workExperienceTotal < 12 || workExperienceCurrent < 3) {
-            String exceptionMessage = "Credit denial: Wrong experience";
+            String exceptionMessage = "Credit denial: insufficient experience";
             throw new ValidationException(exceptionMessage);
         }
     }
@@ -93,7 +93,6 @@ public class ScoringRateService {
             case TOP_MANAGER -> {
                 return zero.subtract(BigDecimal.valueOf(4));
             }
-            case NONE -> throw new ValidationException("Credit denial: employee position - none");
             default -> throw new BadRequestException("Unknown employee position");
         }
     }

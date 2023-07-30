@@ -1,5 +1,7 @@
 package ru.neoflex.neostudy.conveyor.handler;
 
+import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,13 +13,16 @@ import ru.neoflex.neostudy.conveyor.model.response.ApiErrorResponse;
 
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler({BadRequestException.class, ValidationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ApiErrorResponse> handle(BadRequestException e) {
-        ApiErrorResponse exceptionResponse = getApiErrorResponse(e, "400", "Invalid request parameters");
+    public ResponseEntity<ApiErrorResponse> handle(RuntimeException e) {
+        String message = e.getMessage();
+        ApiErrorResponse exceptionResponse = getApiErrorResponse(e, "400", message);
+        log.error(message);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -25,22 +30,32 @@ public class CustomExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ApiErrorResponse> handle(MethodArgumentNotValidException e) {
         String message = e.getFieldErrors()
-                          .stream()
-                          .map(it -> it.getField() + ": " + it.getDefaultMessage())
-                          .collect(Collectors.joining("; "));
+                .stream()
+                .map(it -> it.getField() + ": " + it.getDefaultMessage())
+                .collect(Collectors.joining("; "));
+        log.error(message);
         ApiErrorResponse exceptionResponse = getApiErrorResponse(e, "400", message);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
+//    @ExceptionHandler(ValidationException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ResponseEntity<ApiErrorResponse> handle(ValidationException e) {
+//        String message = e.getMessage();
+//        ApiErrorResponse exceptionResponse = getApiErrorResponse(e, "400", message);
+//        log.error(message);
+//        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+//    }
+
 
     private ApiErrorResponse getApiErrorResponse(Exception e, String code, String description) {
         ApiErrorResponse exceptionResponse = ApiErrorResponse.builder()
-                                                             .code(code)
-                                                             .description(description)
-                                                             .exceptionName(e.getClass()
-                                                                             .getName())
-                                                             .exceptionMessage(e.getMessage())
-                                                             .build();
+                .code(code)
+                .description(description)
+                .exceptionName(e.getClass()
+                        .getName())
+                .exceptionMessage(e.getMessage())
+                .build();
         for (StackTraceElement stackTraceElement : e.getStackTrace()) {
             exceptionResponse.addStacktraceItem(stackTraceElement.toString());
         }
