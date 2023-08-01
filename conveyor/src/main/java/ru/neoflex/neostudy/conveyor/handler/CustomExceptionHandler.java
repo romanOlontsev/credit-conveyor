@@ -38,16 +38,6 @@ public class CustomExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 
-//    @ExceptionHandler(ValidationException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ResponseEntity<ApiErrorResponse> handle(ValidationException e) {
-//        String message = e.getMessage();
-//        ApiErrorResponse exceptionResponse = getApiErrorResponse(e, "400", message);
-//        log.error(message);
-//        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
-//    }
-
-
     private ApiErrorResponse getApiErrorResponse(Exception e, String code, String description) {
         ApiErrorResponse exceptionResponse = ApiErrorResponse.builder()
                 .code(code)

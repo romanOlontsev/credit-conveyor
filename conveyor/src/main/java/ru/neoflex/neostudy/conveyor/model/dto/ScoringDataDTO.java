@@ -27,7 +27,7 @@ public class ScoringDataDTO {
     private Integer term;
     @UserNameConstraint(message = "The firstname must contain from 2 to 30 latin characters")
     private String firstName;
-    @UserNameConstraint(message = "The firstname must contain from 2 to 30 latin characters")
+    @UserNameConstraint(message = "The lastname must contain from 2 to 30 latin characters")
     private String lastName;
     @UserNameConstraint(required = false,
             message = "The middle name must be empty or contain from 2 to 30 Latin characters")
