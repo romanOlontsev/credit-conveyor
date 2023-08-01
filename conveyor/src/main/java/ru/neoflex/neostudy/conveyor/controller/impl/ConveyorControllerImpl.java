@@ -24,7 +24,7 @@ public class ConveyorControllerImpl implements ConveyorController {
     @Override
     public ResponseEntity<List<LoanOfferDTO>> generateOffers(LoanApplicationRequestDTO prescoringRequest) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null) {
             List<LoanOfferDTO> offers = service.generateOffers(prescoringRequest);
             return new ResponseEntity<>(offers, HttpStatus.OK);
         }
@@ -34,7 +34,7 @@ public class ConveyorControllerImpl implements ConveyorController {
     @Override
     public ResponseEntity<CreditDTO> calculateCredit(ScoringDataDTO scoringRequest) {
         String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        if (accept != null) {
             CreditDTO credit = service.calculateCredit(scoringRequest);
             return new ResponseEntity<>(credit, HttpStatus.OK);
         }

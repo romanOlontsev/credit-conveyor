@@ -13,10 +13,11 @@ public class OpenApiConfig {
     public OpenAPI openApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Bot API")
-                        .version("0.0.1")
-                        .contact(new Contact()
-                                .name("Roman Olontsev")
-                                .email("rs.olontsev@gmail.com")));
+                              .title("Conveyor API")
+                              .version("1.0.0")
+                              .contact(new Contact()
+                                               .name("Roman Olontsev")
+                                               .email("rs.olontsev@gmail.com")
+                                               .url("https://t.me/r_olontsev")));
     }
 }

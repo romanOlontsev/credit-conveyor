@@ -107,8 +107,6 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("Bad request: Accept=null");
-
-
     }
 
     @Test
