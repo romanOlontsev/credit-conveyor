@@ -6,9 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @ToString
 public class PaymentScheduleElement {
