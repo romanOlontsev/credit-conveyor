@@ -18,6 +18,7 @@
 
     <modules>
         <module>conveyor</module>
+        <module>deal</module>
     </modules>
 
     <properties>
