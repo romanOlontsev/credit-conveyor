@@ -8,6 +8,7 @@ import ru.neoflex.neosudy.deal.model.jsonb.PaymentScheduleElement;
 import ru.neoflex.neosudy.deal.model.types.CreditStatus;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "credit", schema = "credit_app")
@@ -34,7 +35,7 @@ public class Credit {
     private BigDecimal psk;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "payment_schedule")
-    private PaymentScheduleElement paymentSchedule;
+    private List<PaymentScheduleElement> paymentSchedule;
     @Column(name = "insurance_enable")
     private Boolean insuranceEnable;
     @Column(name = "salary_client")

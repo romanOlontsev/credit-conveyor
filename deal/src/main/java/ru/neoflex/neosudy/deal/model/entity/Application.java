@@ -26,11 +26,9 @@ public class Application {
     private Long applicationId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")
-    @Column(name = "client_id")
     private Client clientId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_id")
-    @Column(name = "credit_id")
     private Credit creditId;
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import ru.neoflex.neosudy.deal.model.jsonb.Employment;
-import ru.neoflex.neosudy.deal.model.jsonb.Passport;
 import ru.neoflex.neosudy.deal.model.types.Gender;
 import ru.neoflex.neosudy.deal.model.types.MaritalStatus;
 
@@ -42,11 +40,11 @@ public class Client {
     private MaritalStatus maritalStatus;
     @Column(name = "dependent_amount")
     private Integer dependentAmount;
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "passport")
-    private Passport passport;
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "employment")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id")
+    private Passport passportID;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employment_id")
     private Employment employment;
     @Column(name = "account")
     private String account;

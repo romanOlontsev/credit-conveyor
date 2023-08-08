@@ -1,17 +1,23 @@
-package ru.neoflex.neosudy.deal.model.jsonb;
+package ru.neoflex.neosudy.deal.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 
+@Entity
+@Table(name = "passport", schema = "credit_app")
 @Getter
 @Setter
-@AllArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class Passport implements Serializable {
+public class Passport {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty(value = "passport_id")
     private Long passportId;
     @JsonProperty(value = "series")
