@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset admin:20
+--changeset admin:23
 CREATE SCHEMA IF NOT EXISTS credit_app;
 CREATE TABLE IF NOT EXISTS credit_app.credit
 (

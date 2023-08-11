@@ -17,7 +17,8 @@ public interface CreditMapper {
 
     @Mapping(source = "insuranceEnable", target = "isInsuranceEnabled")
     @Mapping(source = "salaryClient", target = "isSalaryClient")
-    ScoringDataDTO updateScoringData(@MappingTarget ScoringDataDTO scoringData, Credit credit);
+    void updateScoringData(@MappingTarget ScoringDataDTO scoringData, Credit credit);
 
+    @Mapping(target = "creditStatus", constant = "CALCULATED")
     void updateCredit(@MappingTarget Credit credit, CreditDTO creditDTO);
 }

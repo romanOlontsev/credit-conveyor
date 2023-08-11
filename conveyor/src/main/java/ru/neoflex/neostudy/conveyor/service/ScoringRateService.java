@@ -77,6 +77,8 @@ public class ScoringRateService {
             }
             case BUSINESS_OWNER -> {
                 return zero.add(BigDecimal.valueOf(3));
+            }case EMPLOYED -> {
+                return zero;
             }
             default -> throw new BadRequestException("Unknown employment status");
         }

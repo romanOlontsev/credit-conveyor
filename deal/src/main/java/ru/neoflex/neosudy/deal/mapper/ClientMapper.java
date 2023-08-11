@@ -10,12 +10,10 @@ import ru.neoflex.neosudy.deal.model.entity.Client;
 
 @Mapper(componentModel = "spring")
 public interface ClientMapper {
+    @Mapping(source = "passportSeries", target = "passport.series")
+    @Mapping(source = "passportNumber", target = "passport.number")
     Client loanApplicationRequestToClient(LoanApplicationRequestDTO loanApplicationRequestDTO);
 
-    //    @Mapping(source = "gender", target = "gender")
-//    @Mapping(source = "maritalStatus", target = "maritalStatus")
-//    @Mapping(source = "dependentAmount", target = "dependentAmount")
-//    @Mapping(source = "account", target = "account")
     @Mapping(source = "passportIssueBranch", target = "passport.issueBranch")
     @Mapping(source = "passportIssueDate", target = "passport.issueDate")
     void updateClient(@MappingTarget Client client, FinishRegistrationRequestDTO finishRegistrationRequestDTO);
@@ -24,6 +22,6 @@ public interface ClientMapper {
     @Mapping(source = "passport.number", target = "passportNumber")
     @Mapping(source = "passport.issueBranch", target = "passportIssueBranch")
     @Mapping(source = "passport.issueDate", target = "passportIssueDate")
-//    @Mapping(source = "employment.employerINN", target = "passportIssueDate")
+    @Mapping(source = "employment.status", target = "employment.employmentStatus")
     ScoringDataDTO clientToScoringData(Client client);
 }

@@ -20,11 +20,11 @@ public class ScoringDataDTO {
     private BigDecimal amount;
     @JsonProperty(value = "term")
     private Integer term;
-    @JsonProperty(value = "firstName")
+    @JsonProperty(value = "first_name")
     private String firstName;
-    @JsonProperty(value = "lastName")
+    @JsonProperty(value = "last_name")
     private String lastName;
-    @JsonProperty(value = "middleName")
+    @JsonProperty(value = "middle_name")
     private String middleName;
     @JsonProperty(value = "gender")
     private Gender gender;

@@ -3,8 +3,6 @@ package ru.neoflex.neosudy.deal.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import ru.neoflex.neosudy.deal.model.types.Gender;
 import ru.neoflex.neosudy.deal.model.types.MaritalStatus;
 
@@ -50,4 +48,9 @@ public class Client {
     private Employment employment;
     @Column(name = "account")
     private String account;
+
+//    @OneToOne
+//    @MapsId
+//    @JoinColumn(name = "application_id")
+//    private Application application;
 }

@@ -27,9 +27,15 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_id")
     private Long applicationId;
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")
     private Client clientId;
+//    @OneToOne(mappedBy = "application",cascade = CascadeType.ALL)
+//    @PrimaryKeyJoinColumn
+//    private Client clientId;
+
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_id")
     private Credit creditId;

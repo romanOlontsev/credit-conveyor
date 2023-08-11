@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset admin:20
+--changeset admin:23
 INSERT INTO credit_app.credit (amount, term, monthly_payment, rate, psk, payment_schedule, insurance_enable,
                                salary_client, credit_status)
 VALUES (10000.00, 12, 921.57, 19.00, 11058.84,
@@ -170,14 +170,15 @@ VALUES ('BUSINESS_OWNER', '543322112765', 78233.60, 'TOP_MANAGER', 24, 12);
 
 INSERT INTO credit_app.client(first_name, last_name, middle_name, birth_date, email, gender, marital_status,
                               dependent_amount, passport_id, employment_id, account)
-VALUES ('Malfurion', 'Fury', 'Olen', '2004-03-02', 'malfurion@olen.dog', 'MALE', 'MARRIED', 1, 1, 1, '1234 Tinkoff');
+VALUES ('Malfurion', 'Fury', 'Olen', '2023-08-11T19:32:17.3441307', 'malfurion@olen.dog', 'MALE', 'MARRIED', 1, 1, 1, '1234 Tinkoff');
 INSERT INTO credit_app.client(first_name, last_name, birth_date, email, gender, marital_status,
                               dependent_amount, passport_id, employment_id, account)
-VALUES ('Arthas', 'Menethil', '2003-01-02', 'lich@king.com', 'MALE', 'DIVORCED', 0, 2, 2, '4324 Sber');
+VALUES ('Arthas', 'Menethil', '2023-08-11T19:32:17.3441307', 'lich@king.com', 'MALE', 'DIVORCED', 0, 2, 2, '4324 Sber');
 
 INSERT INTO credit_app.application(client_id, credit_id, status, creation_date, applied_offer, ses_code,
                                    status_history)
-VALUES (1, 1, 'PREPARE_DOCUMENTS', '2023-01-01 11:22', '{
+VALUES (1, 1, 'PREPARE_DOCUMENTS', '2023-08-11T19:32:17.3441307',
+'{
   "application_id": 6,
   "requested_amount": 125000,
   "total_amount": 146254.5,
@@ -187,14 +188,14 @@ VALUES (1, 1, 'PREPARE_DOCUMENTS', '2023-01-01 11:22', '{
   "is_insurance_enabled": true,
   "is_salary_client": true
 }', '1234-1323-3212-6543',
-        '[{
-            "status": "PREAPPROVAL",
-            "time": "2022-12-12",
-            "change_type": "MANUAL"
-        }]');
+'[{
+    "time": "2023-08-11T19:39:55.2076183",
+    "status": "PREAPPROVAL",
+    "change_type": "AUTOMATIC"
+}]');
 INSERT INTO credit_app.application(client_id, credit_id, status, creation_date, applied_offer, ses_code,
                                    status_history)
-VALUES (2, 2, 'DOCUMENT_CREATED', '2023-04-02 13:28', '{
+VALUES (2, 2, 'DOCUMENT_CREATED', '2023-08-11T19:32:17.3441307', '{
   "application_id": 6,
   "requested_amount": 125000,
   "total_amount": 149688.98,
@@ -205,7 +206,7 @@ VALUES (2, 2, 'DOCUMENT_CREATED', '2023-04-02 13:28', '{
   "is_salary_client": false
 }', '9877-1323-1235-8765',
         '[{
-            "status": "PREAPPROVAL",
-            "time": "2022-11-10",
-            "change_type": "MANUAL"
+          "time": "2023-08-11T19:39:55.2076183",
+          "status": "PREAPPROVAL",
+          "change_type": "AUTOMATIC"
         }]');
