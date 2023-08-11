@@ -1,13 +1,14 @@
 package ru.neoflex.neosudy.deal.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
-import java.io.Serializable;
-import java.time.OffsetDateTime;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
+@DynamicInsert
 @Table(name = "passport", schema = "credit_app")
 @Getter
 @Setter
@@ -18,14 +19,14 @@ import java.time.OffsetDateTime;
 public class Passport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(value = "passport_id")
+    @Column(name = "passport_id")
     private Long passportId;
-    @JsonProperty(value = "series")
+    @Column(name = "series")
     private String series;
-    @JsonProperty(value = "number")
+    @Column(name = "number")
     private String number;
-    @JsonProperty(value = "issue_branch")
+    @Column(name = "issue_branch")
     private String issueBranch;
-    @JsonProperty(value = "issue_date")
-    private OffsetDateTime issueDate;
+    @Column(name = "issue_date")
+    private LocalDate issueDate;
 }

@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset admin:10
+--changeset admin:20
 INSERT INTO credit_app.credit (amount, term, monthly_payment, rate, psk, payment_schedule, insurance_enable,
                                salary_client, credit_status)
 VALUES (10000.00, 12, 921.57, 19.00, 11058.84,
@@ -177,17 +177,35 @@ VALUES ('Arthas', 'Menethil', '2003-01-02', 'lich@king.com', 'MALE', 'DIVORCED',
 
 INSERT INTO credit_app.application(client_id, credit_id, status, creation_date, applied_offer, ses_code,
                                    status_history)
-VALUES (1, 1, 'PREPARE_DOCUMENTS', '2023-01-01 11:22', '{}', '1234-1323-3212-6543',
-        '{
+VALUES (1, 1, 'PREPARE_DOCUMENTS', '2023-01-01 11:22', '{
+  "application_id": 6,
+  "requested_amount": 125000,
+  "total_amount": 146254.5,
+  "term": 14,
+  "monthly_payment": 10446.75,
+  "rate": 26,
+  "is_insurance_enabled": true,
+  "is_salary_client": true
+}', '1234-1323-3212-6543',
+        '[{
             "status": "PREAPPROVAL",
             "time": "2022-12-12",
             "change_type": "MANUAL"
-        }');
+        }]');
 INSERT INTO credit_app.application(client_id, credit_id, status, creation_date, applied_offer, ses_code,
                                    status_history)
-VALUES (2, 2, 'DOCUMENT_CREATED', '2023-04-02 13:28', '{}', '9877-1323-1235-8765',
-        '{
+VALUES (2, 2, 'DOCUMENT_CREATED', '2023-04-02 13:28', '{
+  "application_id": 6,
+  "requested_amount": 125000,
+  "total_amount": 149688.98,
+  "term": 14,
+  "monthly_payment": 10692.07,
+  "rate": 30,
+  "is_insurance_enabled": false,
+  "is_salary_client": false
+}', '9877-1323-1235-8765',
+        '[{
             "status": "PREAPPROVAL",
             "time": "2022-11-10",
             "change_type": "MANUAL"
-        }');
+        }]');

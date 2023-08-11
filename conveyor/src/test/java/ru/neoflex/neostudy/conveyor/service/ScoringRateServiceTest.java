@@ -32,7 +32,7 @@ class ScoringRateServiceTest {
     void setUp() {
         EmploymentDTO employment = EmploymentDTO.builder()
                 .employmentStatus(EmploymentStatus.BUSINESS_OWNER)
-                .employerINN("1234")
+                .employerInn("1234")
                 .salary(BigDecimal.valueOf(50000))
                 .position(Position.MIDDLE_MANAGER)
                 .workExperienceTotal(13)

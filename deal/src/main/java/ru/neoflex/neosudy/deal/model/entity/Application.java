@@ -2,16 +2,19 @@ package ru.neoflex.neosudy.deal.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
-import ru.neoflex.neosudy.deal.model.jsonb.AppliedOffer;
+import ru.neoflex.neosudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neosudy.deal.model.jsonb.StatusHistory;
 import ru.neoflex.neosudy.deal.model.types.ApplicationStatus;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
+@DynamicInsert
 @Table(name = "application", schema = "credit_app")
 @Getter
 @Setter
@@ -34,16 +37,22 @@ public class Application {
     @Column(name = "status")
     private ApplicationStatus status;
     @Column(name = "creation_date")
-    private OffsetDateTime creationDate;
+    private LocalDateTime creationDate;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "applied_offer")
-    private AppliedOffer appliedOffer;
+    private LoanOfferDTO appliedOffer;
     @Column(name = "sign_date")
-    private OffsetDateTime signDate;
-    @UuidGenerator
-    @Column(name = "ses_code", columnDefinition = "VARCHAR")
+    private LocalDateTime signDate;
+    @Column(name = "ses_code")
     private String sesCode;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "status_history")
-    private StatusHistory statusHistory;
+    private List<StatusHistory> statusHistory;
+
+    @PrePersist
+    private void generateSesCode() {
+        setSesCode(UUID.randomUUID()
+                       .toString());
+
+    }
 }

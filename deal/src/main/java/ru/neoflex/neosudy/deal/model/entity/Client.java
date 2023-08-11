@@ -2,6 +2,7 @@ package ru.neoflex.neosudy.deal.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ru.neoflex.neosudy.deal.model.types.Gender;
@@ -10,6 +11,7 @@ import ru.neoflex.neosudy.deal.model.types.MaritalStatus;
 import java.time.LocalDate;
 
 @Entity
+@DynamicInsert
 @Table(name = "client", schema = "credit_app")
 @Getter
 @Setter
@@ -29,7 +31,7 @@ public class Client {
     @Column(name = "middle_name")
     private String middleName;
     @Column(name = "birth_date")
-    private LocalDate birth_date;
+    private LocalDate birthDate;
     @Column(name = "email")
     private String email;
     @Enumerated(EnumType.STRING)
@@ -42,7 +44,7 @@ public class Client {
     private Integer dependentAmount;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "passport_id")
-    private Passport passportID;
+    private Passport passport;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "employment_id")
     private Employment employment;

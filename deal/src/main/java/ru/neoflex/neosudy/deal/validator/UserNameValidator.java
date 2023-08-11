@@ -15,14 +15,16 @@ public class UserNameValidator implements ConstraintValidator<UserNameConstraint
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return false;
-        }
         String regex = "^[a-zA-Z]{2,30}$";
         if (required) {
-            return value.matches(regex);
+            if (value == null) {
+                return false;
+            }
         } else {
-            return value.isEmpty() || value.matches(regex);
+            if (value == null) {
+                return true;
+            }
         }
+        return value.matches(regex);
     }
 }

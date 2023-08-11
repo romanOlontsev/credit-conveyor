@@ -11,9 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.neoflex.neosudy.deal.model.dto.FinishRegistrationRequestDTO;
 import ru.neoflex.neosudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neosudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neosudy.deal.model.response.ApiErrorResponse;
@@ -42,10 +41,66 @@ public interface DealController {
     @PostMapping(value = "/application",
             produces = {"application/json"},
             consumes = {"application/json"})
-    ResponseEntity<List<LoanOfferDTO>> generateOffers(
+    ResponseEntity<List<LoanOfferDTO>> calculateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @Valid
-            @RequestBody LoanApplicationRequestDTO prescoringRequest
+            @RequestBody LoanApplicationRequestDTO request
     );
+
+    @Operation(summary = "Selecting one of the offers")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Offer selection was successful"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request parameters",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PutMapping(value = "/offer",
+            consumes = {"application/json"})
+    ResponseEntity<Void> selectOffer(
+            @Parameter(in = ParameterIn.DEFAULT,
+                    required = true)
+            @RequestBody LoanOfferDTO request
+    );
+
+    @Operation(summary = "Successful registration")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Offer selection was successful"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request parameters",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PutMapping(value = "/calculate/{applicationId}",
+            consumes = {"application/json"})
+    ResponseEntity<Void> finishRegistration(
+            @Parameter(in = ParameterIn.PATH,
+                    required = true)
+            @PathVariable String applicationId,
+            @Parameter(in = ParameterIn.DEFAULT,
+                    required = true)
+            @RequestBody FinishRegistrationRequestDTO request);
+
+
 }

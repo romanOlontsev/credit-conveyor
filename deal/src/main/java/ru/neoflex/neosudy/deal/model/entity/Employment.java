@@ -20,20 +20,20 @@ import java.math.BigDecimal;
 public class Employment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty(value = "employment_id")
+    @Column(name = "employment_id")
     private Long employmentId;
     @Enumerated(EnumType.STRING)
-    @JsonProperty(value = "status")
+    @Column(name = "status")
     private EmploymentStatus status;
-    @JsonProperty(value = "employer_inn")
+    @Column(name = "employer_inn")
     private String employerInn;
-    @JsonProperty(value = "salary")
+    @Column(name = "salary")
     private BigDecimal salary;
     @Enumerated(EnumType.STRING)
-    @JsonProperty(value = "position")
+    @Column(name = "position")
     private Position position;
-    @JsonProperty(value = "work_experience_total")
+    @Column(name = "work_experience_total")
     private Integer workExperienceTotal;
-    @JsonProperty(value = "work_experience_current")
+    @Column(name = "work_experience_current")
     private Integer workExperienceCurrent;
 }

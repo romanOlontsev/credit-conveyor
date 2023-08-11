@@ -37,7 +37,7 @@ class ConveyorServiceTest {
                                                                      .lastName("test")
                                                                      .middleName("test")
                                                                      .email("man@dog.con")
-                                                                     .birthdate(LocalDate.now()
+                                                                     .birthDate(LocalDate.now()
                                                                                          .minusYears(25))
                                                                      .passportSeries("1234")
                                                                      .passportNumber("123456")
@@ -75,7 +75,7 @@ class ConveyorServiceTest {
     void calculateCredit_shouldReturnCreditDto() {
         EmploymentDTO employment = EmploymentDTO.builder()
                                                 .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                .employerINN("321123")
+                                                .employerInn("321123")
                                                 .salary(BigDecimal.valueOf(50000))
                                                 .position(Position.MIDDLE_MANAGER)
                                                 .workExperienceTotal(15)
