@@ -28,29 +28,31 @@ public class Application {
     @Column(name = "application_id")
     private Long applicationId;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_id")
     private Client clientId;
-//    @OneToOne(mappedBy = "application",cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
-//    private Client clientId;
-
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credit_id")
     private Credit creditId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ApplicationStatus status;
+
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "applied_offer")
     private LoanOfferDTO appliedOffer;
+
     @Column(name = "sign_date")
     private LocalDateTime signDate;
+
     @Column(name = "ses_code")
     private String sesCode;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "status_history")
     private List<StatusHistory> statusHistory;
