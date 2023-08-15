@@ -9,6 +9,7 @@ import ru.neoflex.neosudy.deal.model.types.CreditStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "credit", schema = "credit_app")
@@ -43,4 +44,17 @@ public class Credit {
     @Enumerated(EnumType.STRING)
     @Column(name = "credit_status")
     private CreditStatus creditStatus;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Credit credit = (Credit) o;
+        return Objects.equals(amount, credit.amount) && Objects.equals(term, credit.term) && Objects.equals(monthlyPayment, credit.monthlyPayment) && Objects.equals(rate, credit.rate) && Objects.equals(psk, credit.psk) && Objects.equals(paymentSchedule, credit.paymentSchedule) && Objects.equals(insuranceEnable, credit.insuranceEnable) && Objects.equals(salaryClient, credit.salaryClient) && creditStatus == credit.creditStatus;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(amount, term, monthlyPayment, rate, psk, paymentSchedule, insuranceEnable, salaryClient, creditStatus);
+    }
 }

@@ -15,7 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.neoflex.neosudy.deal.config.IntegrationEnvironment;
 import ru.neoflex.neosudy.deal.config.TestDbConfiguration;
+import ru.neoflex.neosudy.deal.exception.DataNotFoundException;
 import ru.neoflex.neosudy.deal.model.dto.LoanApplicationRequestDTO;
+import ru.neoflex.neosudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neosudy.deal.model.entity.Application;
 import ru.neoflex.neosudy.deal.model.entity.Client;
 import ru.neoflex.neosudy.deal.model.entity.Passport;
@@ -25,15 +27,18 @@ import ru.neoflex.neosudy.deal.model.types.ChangeType;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -127,10 +132,88 @@ class ApplicationServiceTest extends IntegrationEnvironment {
     }
 
     @Test
-    void findApplicationById() {
+    void findApplicationById_shouldReturnExpectedApplication() {
+//        given
+        LoanOfferDTO expectedLoanOfferDTO = LoanOfferDTO.builder()
+                                                        .applicationId(6L)
+                                                        .requestedAmount(BigDecimal.valueOf(125000))
+                                                        .totalAmount(BigDecimal.valueOf(146254.5))
+                                                        .term(14)
+                                                        .monthlyPayment(BigDecimal.valueOf(10446.75))
+                                                        .rate(BigDecimal.valueOf(26))
+                                                        .isInsuranceEnabled(true)
+                                                        .isSalaryClient(true)
+                                                        .build();
+        StatusHistory expectedHistory = StatusHistory.builder()
+                                                     .time(LocalDateTime.parse("2023-08-11T19:39:55.2076183"))
+                                                     .status(ApplicationStatus.PREAPPROVAL)
+                                                     .changeType(ChangeType.AUTOMATIC)
+                                                     .build();
+        Application expectedApplication = Application.builder()
+                                                     .applicationId(1L)
+                                                     .status(ApplicationStatus.PREPARE_DOCUMENTS)
+                                                     .creationDate(LocalDateTime.parse("2023-08-11T19:32:17.3441307"))
+                                                     .appliedOffer(expectedLoanOfferDTO)
+                                                     .sesCode("1234-1323-3212-6543")
+                                                     .statusHistory(List.of(expectedHistory))
+                                                     .build();
+//        when
+        Application response = service.findApplicationById(1L);
+//        then
+        assertAll(
+                () -> assertThat(response).isNotNull(),
+                () -> assertThat(response.getApplicationId()).isEqualTo(expectedApplication.getApplicationId()),
+                () -> assertThat(response.getSesCode()).isEqualTo(expectedApplication.getSesCode()),
+                () -> assertThat(response.getStatusHistory()).isEqualTo(expectedApplication.getStatusHistory()),
+                () -> assertThat(response.getAppliedOffer()).isEqualTo(expectedApplication.getAppliedOffer())
+        );
     }
 
     @Test
-    void changeStatus() {
+    void findApplicationById_shouldThrowDataNotFoundException() {
+        assertAll(
+                () -> assertThatThrownBy(() -> service.findApplicationById(-999L))
+                        .isInstanceOf(DataNotFoundException.class)
+                        .hasMessage("Application with id=-999 not found")
+        );
+    }
+
+    @Test
+    void changeStatus_shouldChangeStatusAndCreateHistory() {
+        Application application = Application.builder()
+                                             .build();
+        ApplicationStatus status = ApplicationStatus.CC_DENIED;
+
+        service.changeStatus(application, status);
+
+        assertAll(
+                () -> assertThat(application.getStatus()).isNotNull()
+                                                         .isEqualTo(status),
+                () -> assertTrue(Duration.between(application.getCreationDate(), LocalDateTime.now())
+                                         .getSeconds() < 1),
+                () -> assertThat(application.getStatusHistory()
+                                            .get(0)
+                                            .getChangeType()).isEqualTo(ChangeType.AUTOMATIC)
+        );
+    }
+
+    @Test
+    void changeStatus_shouldChangeStatusAndAddToHistory() {
+        Application application = Application.builder()
+                                             .statusHistory(new ArrayList<>())
+                                             .build();
+        ApplicationStatus status = ApplicationStatus.CC_DENIED;
+
+        service.changeStatus(application, status);
+
+        assertAll(
+                () -> assertThat(application.getStatus()).isNotNull()
+                                                         .isEqualTo(status),
+                () -> assertTrue(Duration.between(application.getCreationDate(), LocalDateTime.now())
+                                         .getSeconds() < 1),
+                () -> assertThat(application.getStatusHistory()
+                                            .get(0)
+                                            .getChangeType()).isEqualTo(ChangeType.AUTOMATIC)
+        );
     }
 }

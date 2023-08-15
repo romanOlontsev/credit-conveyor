@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class LoanOfferDTO {
     @JsonProperty(value = "application_id")
     private Long applicationId;

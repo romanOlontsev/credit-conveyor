@@ -88,7 +88,7 @@ class ConveyorServiceTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(30))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")

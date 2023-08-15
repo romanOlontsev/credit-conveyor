@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @DynamicInsert
@@ -32,4 +33,17 @@ public class Passport {
 
     @Column(name = "issue_date")
     private LocalDate issueDate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Passport passport = (Passport) o;
+        return Objects.equals(series, passport.series) && Objects.equals(number, passport.number);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(series, number);
+    }
 }

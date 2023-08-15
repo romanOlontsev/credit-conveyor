@@ -45,7 +45,7 @@ class ScoringRateServiceTest {
                 .lastName("test")
                 .middleName("test")
                 .gender(Gender.MALE)
-                .birthdate(LocalDate.now().minusYears(25))
+                .birthDate(LocalDate.now().minusYears(25))
                 .passportSeries("1234")
                 .passportNumber("123456")
                 .passportIssueDate(LocalDate.now().minusYears(5))
@@ -82,9 +82,9 @@ class ScoringRateServiceTest {
 
     @Test
     void calculateScoringRate_shouldThrowValidatedExceptionByAge() {
-        scoringDataDTO.setBirthdate(LocalDate.now());
+        scoringDataDTO.setBirthDate(LocalDate.now());
         ScoringDataDTO youngAge = scoringDataDTO;
-        scoringDataDTO.setBirthdate(LocalDate.now().minusYears(100L));
+        scoringDataDTO.setBirthDate(LocalDate.now().minusYears(100L));
         ScoringDataDTO oldAge = scoringDataDTO;
 
         String exceptionMessage = "Credit denial: credit is issued from 20 to 60 years";
@@ -216,7 +216,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_male_age_40() {
         scoringDataDTO.setGender(Gender.MALE);
-        scoringDataDTO.setBirthdate(LocalDate.now().minusYears(40));
+        scoringDataDTO.setBirthDate(LocalDate.now().minusYears(40));
         ScoringDataDTO male40 = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(male40);
@@ -228,7 +228,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_female_age_40() {
         scoringDataDTO.setGender(Gender.FEMALE);
-        scoringDataDTO.setBirthdate(LocalDate.now().minusYears(40));
+        scoringDataDTO.setBirthDate(LocalDate.now().minusYears(40));
         ScoringDataDTO female40 = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(female40);
@@ -240,7 +240,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_female_age_20() {
         scoringDataDTO.setGender(Gender.FEMALE);
-        scoringDataDTO.setBirthdate(LocalDate.now().minusYears(20));
+        scoringDataDTO.setBirthDate(LocalDate.now().minusYears(20));
         ScoringDataDTO female40 = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(female40);

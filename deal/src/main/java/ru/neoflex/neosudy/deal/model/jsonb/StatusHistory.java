@@ -9,13 +9,13 @@ import ru.neoflex.neosudy.deal.model.types.ChangeType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Builder
 @ToString
+@EqualsAndHashCode
 public class StatusHistory implements Serializable {
     @Enumerated(EnumType.STRING)
     @JsonProperty(value = "status")

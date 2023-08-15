@@ -43,7 +43,7 @@ public class ScoringDataDTO {
     private Gender gender;
     @UserAgeConstraint(message = "User must be over 18 years of age")
     @JsonProperty(value = "birthdate")
-    private LocalDate birthdate;
+    private LocalDate birthDate;
     @NotNull
     @Pattern(regexp = "^\\d{4}$", message = "Passport series must contain 4 numbers")
     @JsonProperty(value = "passport_series")

@@ -47,7 +47,7 @@ public class ScoringRateService {
     }
 
     private void checkAge(ScoringDataDTO scoringRequest) {
-        int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
+        int age = Period.between(scoringRequest.getBirthDate(), LocalDate.now())
                         .getYears();
         if (age < 20 || age > 60) {
             String exceptionMessage = "Credit denial: credit is issued from 20 to 60 years";
@@ -122,7 +122,7 @@ public class ScoringRateService {
     private BigDecimal getGenderRate(ScoringDataDTO scoringRequest) {
         BigDecimal zero = BigDecimal.ZERO;
         Gender gender = scoringRequest.getGender();
-        int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
+        int age = Period.between(scoringRequest.getBirthDate(), LocalDate.now())
                         .getYears();
         switch (gender) {
             case FEMALE -> {

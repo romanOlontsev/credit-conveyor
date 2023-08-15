@@ -1,13 +1,12 @@
 package ru.neoflex.neosudy.deal.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.neoflex.neosudy.deal.model.types.EmploymentStatus;
 import ru.neoflex.neosudy.deal.model.types.Position;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "employment", schema = "credit_app")
@@ -36,4 +35,17 @@ public class Employment {
     private Integer workExperienceTotal;
     @Column(name = "work_experience_current")
     private Integer workExperienceCurrent;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employment that = (Employment) o;
+        return status == that.status && Objects.equals(employerInn, that.employerInn) && Objects.equals(salary, that.salary) && position == that.position && Objects.equals(workExperienceTotal, that.workExperienceTotal) && Objects.equals(workExperienceCurrent, that.workExperienceCurrent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, employerInn, salary, position, workExperienceTotal, workExperienceCurrent);
+    }
 }
