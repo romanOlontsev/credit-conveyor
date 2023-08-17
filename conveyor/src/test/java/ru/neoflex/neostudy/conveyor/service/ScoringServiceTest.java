@@ -17,6 +17,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -43,7 +44,12 @@ class ScoringServiceTest {
 
     @Test
     void calculatePreRate_shouldReturnBigDecimal_isInsuranceEnabledTrue_isSalaryClientFalse() {
+        AppConfig.Rate rate = mock(AppConfig.Rate.class);
         when(config.baseRate()).thenReturn(10.0);
+        when(config.rate()).thenReturn(rate);
+        when(config.rate()
+                   .isInsuranceEnabledReduction()).thenReturn(3.0);
+
         BigDecimal preRate = service.calculatePreRate(true, false);
 
         BigDecimal expected = BigDecimal.valueOf(7.0);
@@ -53,7 +59,12 @@ class ScoringServiceTest {
 
     @Test
     void calculatePreRate_shouldReturnBigDecimal_isInsuranceEnabledFalse_isSalaryClientTrue() {
+        AppConfig.Rate rate = mock(AppConfig.Rate.class);
         when(config.baseRate()).thenReturn(10.0);
+        when(config.rate()).thenReturn(rate);
+        when(config.rate()
+                   .isSalaryClientReduction()).thenReturn(1.0);
+
         BigDecimal preRate = service.calculatePreRate(false, true);
 
         BigDecimal expected = BigDecimal.valueOf(9.0);
@@ -70,12 +81,16 @@ class ScoringServiceTest {
                                                .build();
 
         BigDecimal scoringRate = BigDecimal.ONE;
+        AppConfig.Rate rate = mock(AppConfig.Rate.class);
         when(config.baseRate()).thenReturn(10.0);
+        when(config.rate()).thenReturn(rate);
+        when(config.rate()
+                   .isInsuranceEnabledReduction()).thenReturn(3.0);
         when(scoringRateService.calculateScoringRate(any())).thenReturn(scoringRate);
         BigDecimal creditRate = service.calculateCreditRate(dataDTO);
 
         assertThat(creditRate).isNotNull()
-                              .isEqualTo(BigDecimal.valueOf(7.0));
+                              .isEqualTo(BigDecimal.valueOf(8.0));
 
     }
 
