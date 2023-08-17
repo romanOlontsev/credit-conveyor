@@ -9,11 +9,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.neoflex.neostudy.conveyor.model.dto.CreditDTO;
 import ru.neoflex.neostudy.conveyor.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.conveyor.model.dto.LoanOfferDTO;
@@ -41,10 +41,11 @@ public interface ConveyorController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))})
+    @ResponseBody
     @PostMapping(value = "/offers",
             produces = {"application/json"},
             consumes = {"application/json"})
-    ResponseEntity<List<LoanOfferDTO>> generateOffers(
+    List<LoanOfferDTO> generateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @Valid
@@ -67,10 +68,11 @@ public interface ConveyorController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))
     })
+    @ResponseBody
     @PostMapping(value = "/calculation",
             produces = {"application/json"},
             consumes = {"application/json"})
-    ResponseEntity<CreditDTO> calculateCredit(
+    CreditDTO calculateCredit(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @Valid
