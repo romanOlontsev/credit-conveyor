@@ -1,7 +1,9 @@
 package ru.neoflex.neostudy.conveyor.service;
 
 import jakarta.validation.ValidationException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.neoflex.neostudy.conveyor.config.AppConfig;
 import ru.neoflex.neostudy.conveyor.exception.BadRequestException;
 import ru.neoflex.neostudy.conveyor.model.dto.ScoringDataDTO;
 import ru.neoflex.neostudy.conveyor.model.types.EmploymentStatus;
@@ -15,7 +17,9 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Service
+@RequiredArgsConstructor
 public class ScoringRateService {
+    private final AppConfig config;
 
     public BigDecimal calculateScoringRate(ScoringDataDTO scoringRequest) {
         checkSalary(scoringRequest);
@@ -36,12 +40,13 @@ public class ScoringRateService {
         BigDecimal amount = scoringRequest.getAmount();
         BigDecimal salary = scoringRequest.getEmployment()
                                           .getSalary();
+        BigDecimal salariesCount = BigDecimal.valueOf(config.salariesLessLoanAmount());
         boolean isAmountMoreThanTwentySalaries = BigDecimalRoughComparison.check(
                 amount,
                 BigDecimalRoughComparison.Operator.GREATER_THAN,
-                salary.multiply(BigDecimal.valueOf(20)));
+                salary.multiply(salariesCount));
         if (isAmountMoreThanTwentySalaries) {
-            String exceptionMessage = "Credit denial: the credit amount is more than 20 salaries";
+            String exceptionMessage = "Credit denial: the credit amount is more than " + salariesCount + " salaries";
             throw new ValidationException(exceptionMessage);
         }
     }
@@ -49,8 +54,10 @@ public class ScoringRateService {
     private void checkAge(ScoringDataDTO scoringRequest) {
         int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
                         .getYears();
-        if (age < 20 || age > 60) {
-            String exceptionMessage = "Credit denial: credit is issued from 20 to 60 years";
+        int maxAge = config.creditMaxAge();
+        int minAge = config.creditMinAge();
+        if (age < minAge || age > maxAge) {
+            String exceptionMessage = "Credit denial: credit is issued from " + minAge + " to " + maxAge + " years";
             throw new ValidationException(exceptionMessage);
         }
     }
@@ -60,7 +67,8 @@ public class ScoringRateService {
                                                     .getWorkExperienceTotal();
         Integer workExperienceCurrent = scoringRequest.getEmployment()
                                                       .getWorkExperienceCurrent();
-        if (workExperienceTotal < 12 || workExperienceCurrent < 3) {
+        if (workExperienceTotal < config.minWorkExperienceTotal() ||
+                workExperienceCurrent < config.minWorkExperienceCurrent()) {
             String exceptionMessage = "Credit denial: insufficient experience";
             throw new ValidationException(exceptionMessage);
         }
@@ -73,10 +81,14 @@ public class ScoringRateService {
         switch (employmentStatus) {
             case UNEMPLOYED -> throw new ValidationException("Credit denial: employment status - unemployed");
             case SELF_EMPLOYED -> {
-                return zero.add(BigDecimal.ONE);
+                BigDecimal selfEmployedRate = BigDecimal.valueOf(config.rate()
+                                                                       .selfEmployedIncrease());
+                return zero.add(selfEmployedRate);
             }
             case BUSINESS_OWNER -> {
-                return zero.add(BigDecimal.valueOf(3));
+                BigDecimal businessOwnerRate = BigDecimal.valueOf(config.rate()
+                                                                        .businessOwnerIncrease());
+                return zero.add(businessOwnerRate);
             }
             default -> throw new BadRequestException("Unknown employment status");
         }
@@ -88,10 +100,14 @@ public class ScoringRateService {
                                           .getPosition();
         switch (position) {
             case MIDDLE_MANAGER -> {
-                return zero.subtract(BigDecimal.valueOf(2));
+                BigDecimal middleManagerRate = BigDecimal.valueOf(config.rate()
+                                                                        .middleManagerReduction());
+                return zero.subtract(middleManagerRate);
             }
             case TOP_MANAGER -> {
-                return zero.subtract(BigDecimal.valueOf(4));
+                BigDecimal topManagerRate = BigDecimal.valueOf(config.rate()
+                                                                     .topManagerReduction());
+                return zero.subtract(topManagerRate);
             }
             default -> throw new BadRequestException("Unknown employee position");
         }
@@ -102,10 +118,14 @@ public class ScoringRateService {
         MaritalStatus maritalStatus = scoringRequest.getMaritalStatus();
         switch (maritalStatus) {
             case MARRIED -> {
-                return zero.subtract(BigDecimal.valueOf(3));
+                BigDecimal marriedRate = BigDecimal.valueOf(config.rate()
+                                                                  .marriedReduction());
+                return zero.subtract(marriedRate);
             }
             case DIVORCED -> {
-                return zero.add(BigDecimal.valueOf(1));
+                BigDecimal divorcedRate = BigDecimal.valueOf(config.rate()
+                                                                   .divorcedIncrease());
+                return zero.add(divorcedRate);
             }
             default -> throw new BadRequestException("Unknown marital status");
         }
@@ -114,7 +134,9 @@ public class ScoringRateService {
     private BigDecimal getDependentAmountRate(ScoringDataDTO scoringRequest) {
         BigDecimal zero = BigDecimal.ZERO;
         Integer dependentAmount = scoringRequest.getDependentAmount();
-        return dependentAmount > 1 ? zero.add(BigDecimal.ONE) : zero;
+        BigDecimal dependentAmountRate = BigDecimal.valueOf(config.rate()
+                                                                  .dependentAmountIncrease());
+        return dependentAmount > 1 ? zero.add(dependentAmountRate) : zero;
     }
 
     private BigDecimal getGenderRate(ScoringDataDTO scoringRequest) {
@@ -124,21 +146,31 @@ public class ScoringRateService {
                         .getYears();
         switch (gender) {
             case FEMALE -> {
-                if (age > 35 && age < 60) {
-                    return zero.subtract(BigDecimal.valueOf(3));
+                int womanMinAge = config.womanMinAgeChangingRate();
+                int womanMaxAge = config.womanMaxAgeChangingRate();
+                if (age > womanMinAge && age < womanMaxAge) {
+                    BigDecimal womanAgeRate = BigDecimal.valueOf(config.rate()
+                                                                       .womanAgeReduction());
+                    return zero.subtract(womanAgeRate);
                 } else {
                     return zero;
                 }
             }
             case MALE -> {
-                if (age > 30 && age < 55) {
-                    return zero.subtract(BigDecimal.valueOf(3));
+                int manMinAge = config.manMinAgeChangingRate();
+                int manMaxAge = config.manMaxAgeChangingRate();
+                if (age > manMinAge && age < manMaxAge) {
+                    BigDecimal manAgeRate = BigDecimal.valueOf(config.rate()
+                                                                     .manAgeReduction());
+                    return zero.subtract(manAgeRate);
                 } else {
                     return zero;
                 }
             }
             case NON_BINARY -> {
-                return zero.add(BigDecimal.valueOf(3));
+                BigDecimal nonBinaryRate = BigDecimal.valueOf(config.rate()
+                                                                    .nonBinaryAgeIncrease());
+                return zero.add(nonBinaryRate);
             }
             default -> throw new BadRequestException("Unknown gender");
         }

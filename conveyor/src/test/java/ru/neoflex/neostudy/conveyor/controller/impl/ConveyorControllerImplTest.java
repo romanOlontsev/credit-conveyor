@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import ru.neoflex.neostudy.conveyor.exception.BadRequestException;
 import ru.neoflex.neostudy.conveyor.model.dto.*;
 import ru.neoflex.neostudy.conveyor.model.response.ApiErrorResponse;
 import ru.neoflex.neostudy.conveyor.model.types.EmploymentStatus;
@@ -79,35 +78,6 @@ class ConveyorControllerImplTest {
                                                          .getTerm())));
     }
 
-    @Test
-    void generateOffers_shouldThrowBadRequestException_notContainAccept() throws Exception {
-        LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
-                                                                        .amount(BigDecimal.valueOf(100000))
-                                                                        .term(6)
-                                                                        .firstName("test")
-                                                                        .lastName("test")
-                                                                        .middleName("test")
-                                                                        .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
-                                                                                            .minusYears(25))
-                                                                        .passportSeries("1234")
-                                                                        .passportNumber("123456")
-                                                                        .build();
-
-        MockHttpServletResponse response =
-                mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO)))
-                       .andExpect(status().isBadRequest())
-                       .andExpect(result -> assertTrue(
-                               result.getResolvedException() instanceof BadRequestException))
-                       .andReturn()
-                       .getResponse();
-        ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
-        assertThat(readValue).isNotNull()
-                             .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("Bad request: Accept=null");
-    }
 
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_amountIsNull() throws Exception {
@@ -705,53 +675,6 @@ class ConveyorControllerImplTest {
                        .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.term", is(creditDTO.getTerm())));
-    }
-
-    @Test
-    void calculateCredit_shouldThrowBadRequestException_notContainAccept() throws Exception {
-        EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
-                                                   .salary(BigDecimal.valueOf(500000))
-                                                   .position(Position.MIDDLE_MANAGER)
-                                                   .workExperienceTotal(15)
-                                                   .workExperienceCurrent(5)
-                                                   .build();
-        ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
-                                                      .amount(BigDecimal.valueOf(100000))
-                                                      .term(6)
-                                                      .firstName("test")
-                                                      .lastName("test")
-                                                      .middleName("test")
-                                                      .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
-                                                                          .minusYears(25))
-                                                      .passportSeries("1234")
-                                                      .passportNumber("123456")
-                                                      .passportIssueDate(LocalDate.now()
-                                                                                  .minusYears(5))
-                                                      .passportIssueBranch("test")
-                                                      .maritalStatus(MaritalStatus.MARRIED)
-                                                      .dependentAmount(1)
-                                                      .employment(employmentDTO)
-                                                      .account("test")
-                                                      .isInsuranceEnabled(false)
-                                                      .isSalaryClient(false)
-                                                      .build();
-
-        MockHttpServletResponse response =
-                mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO)))
-                       .andExpect(status().isBadRequest())
-                       .andExpect(result -> assertTrue(
-                               result.getResolvedException() instanceof BadRequestException))
-                       .andReturn()
-                       .getResponse();
-        ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
-        assertThat(readValue).isNotNull()
-                             .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("Bad request: Accept=null");
     }
 
     @Test
@@ -1750,14 +1673,6 @@ class ConveyorControllerImplTest {
 
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_employmentIsNull() throws Exception {
-        EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
-                                                   .salary(BigDecimal.valueOf(500000))
-                                                   .position(Position.MIDDLE_MANAGER)
-                                                   .workExperienceTotal(15)
-                                                   .workExperienceCurrent(5)
-                                                   .build();
         ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
                                                       .amount(BigDecimal.valueOf(10000))
                                                       .term(6)

@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.neoflex.neostudy.conveyor.config.AppConfigGetter;
 import ru.neoflex.neostudy.conveyor.exception.BadRequestException;
 import ru.neoflex.neostudy.conveyor.model.dto.EmploymentDTO;
 import ru.neoflex.neostudy.conveyor.model.dto.ScoringDataDTO;
@@ -25,7 +26,7 @@ class ScoringRateServiceTest {
 
     @BeforeAll
     static void beforeAll() {
-        service = new ScoringRateService();
+        service = new ScoringRateService(AppConfigGetter.getConfig());
     }
 
     @BeforeEach
@@ -63,7 +64,7 @@ class ScoringRateServiceTest {
     void calculateScoringRate_shouldReturnRate() {
         BigDecimal scoringRate = service.calculateScoringRate(scoringDataDTO);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(2);
+        BigDecimal expectedRate = BigDecimal.valueOf(2.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -123,7 +124,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(selfEmployedStatus);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(0);
+        BigDecimal expectedRate = BigDecimal.valueOf(0.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -160,7 +161,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(topManagerPosition);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(0);
+        BigDecimal expectedRate = BigDecimal.valueOf(0.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -184,7 +185,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(marriedStatus);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(-2);
+        BigDecimal expectedRate = BigDecimal.valueOf(-2.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -209,7 +210,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(dependent);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(3);
+        BigDecimal expectedRate = BigDecimal.valueOf(3.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -221,7 +222,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(male40);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(-1);
+        BigDecimal expectedRate = BigDecimal.valueOf(-1.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -233,7 +234,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(female40);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(-1);
+        BigDecimal expectedRate = BigDecimal.valueOf(-1.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -245,7 +246,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(female40);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(2);
+        BigDecimal expectedRate = BigDecimal.valueOf(2.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
@@ -256,7 +257,7 @@ class ScoringRateServiceTest {
 
         BigDecimal scoringRate = service.calculateScoringRate(nonBinary);
 
-        BigDecimal expectedRate = BigDecimal.valueOf(5);
+        BigDecimal expectedRate = BigDecimal.valueOf(5.0);
         assertThat(scoringRate).isNotNull().isEqualTo(expectedRate);
     }
 
