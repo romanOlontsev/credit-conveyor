@@ -30,5 +30,4 @@ public record AppConfig(@NotNull double baseRate,
                        @NotNull double manAgeReduction,
                        @NotNull double nonBinaryAgeIncrease) {
     }
-
 }

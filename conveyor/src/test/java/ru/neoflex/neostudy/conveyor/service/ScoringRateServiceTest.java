@@ -20,6 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+
 @SpringBootTest
 class ScoringRateServiceTest {
     @Autowired
@@ -128,7 +129,6 @@ class ScoringRateServiceTest {
         ScoringDataDTO selfEmployedStatus = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(selfEmployedStatus);
-
         BigDecimal expectedRate = BigDecimal.valueOf(0.0);
         assertThat(scoringRate).isNotNull()
                                .isEqualTo(expectedRate);
@@ -235,7 +235,6 @@ class ScoringRateServiceTest {
         ScoringDataDTO male40 = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(male40);
-
         BigDecimal expectedRate = BigDecimal.valueOf(-1.0);
         assertThat(scoringRate).isNotNull()
                                .isEqualTo(expectedRate);

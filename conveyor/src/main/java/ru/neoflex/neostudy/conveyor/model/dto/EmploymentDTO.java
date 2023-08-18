@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @ToString
 public class EmploymentDTO {
     private EmploymentStatus employmentStatus;
-    private String employerINN;
+    private String employerInn;
     private BigDecimal salary;
     private Position position;
     private Integer workExperienceTotal;

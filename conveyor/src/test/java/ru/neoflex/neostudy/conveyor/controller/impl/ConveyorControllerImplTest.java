@@ -56,7 +56,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -87,7 +87,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -119,7 +119,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -150,7 +150,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -181,7 +181,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -211,7 +211,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -242,7 +242,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -272,7 +272,7 @@ class ConveyorControllerImplTest {
                                                                         .firstName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -303,7 +303,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("a")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -333,7 +333,7 @@ class ConveyorControllerImplTest {
                                                                         .firstName("test")
                                                                         .lastName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -352,8 +352,8 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                     "Latin characters");
+                             .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
+                                     "latin characters");
     }
 
     @Test
@@ -365,7 +365,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("a")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -384,8 +384,8 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                     "Latin characters");
+                             .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
+                                     "latin characters");
     }
 
     @Test
@@ -396,7 +396,7 @@ class ConveyorControllerImplTest {
                                                                         .firstName("test")
                                                                         .lastName("test")
                                                                         .middleName("test")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -427,7 +427,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("test#dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -475,7 +475,7 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("birthdate: User must be over 18 years of age");
+                             .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
     @Test
@@ -487,7 +487,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(17))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("123456")
@@ -506,7 +506,7 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("birthdate: User must be over 18 years of age");
+                             .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
     @Test
@@ -518,7 +518,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportNumber("123456")
                                                                         .build();
@@ -548,7 +548,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("123")
                                                                         .passportNumber("123456")
@@ -579,7 +579,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .build();
@@ -609,7 +609,7 @@ class ConveyorControllerImplTest {
                                                                         .lastName("test")
                                                                         .middleName("test")
                                                                         .email("man@dog.con")
-                                                                        .birthdate(LocalDate.now()
+                                                                        .birthDate(LocalDate.now()
                                                                                             .minusYears(25))
                                                                         .passportSeries("1234")
                                                                         .passportNumber("12345")
@@ -636,7 +636,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldReturnCreditDTO() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -649,7 +649,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -693,7 +693,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -729,7 +729,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_amountIsLessThan10000() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -742,7 +742,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -778,7 +778,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_termIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -790,7 +790,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -825,7 +825,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_termIsLessThan6() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -838,7 +838,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -873,7 +873,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_firstNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -885,7 +885,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -920,7 +920,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_firstNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -933,7 +933,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -968,7 +968,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_lastNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -980,7 +980,7 @@ class ConveyorControllerImplTest {
                                                       .firstName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1015,7 +1015,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_lastNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1028,7 +1028,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("t")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1063,7 +1063,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1075,7 +1075,7 @@ class ConveyorControllerImplTest {
                                                       .firstName("test")
                                                       .lastName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1111,7 +1111,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1124,7 +1124,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("t")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1160,7 +1160,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_genderIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1172,7 +1172,7 @@ class ConveyorControllerImplTest {
                                                       .firstName("test")
                                                       .lastName("test")
                                                       .middleName("test")
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1207,7 +1207,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_birthdateIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1246,14 +1246,14 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("birthdate: User must be over 18 years of age");
+                             .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_userUnder18() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1266,7 +1266,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(17))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1294,14 +1294,14 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("birthdate: User must be over 18 years of age");
+                             .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportSeriesIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1314,7 +1314,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportNumber("123456")
                                                       .passportIssueDate(LocalDate.now()
@@ -1348,7 +1348,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportSeriesDoesNotContainFourNumbers() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1361,7 +1361,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("12341")
                                                       .passportNumber("123456")
@@ -1396,7 +1396,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportNumberIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1409,7 +1409,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportIssueDate(LocalDate.now()
@@ -1443,7 +1443,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportNumberDoesNotContainSixNumbers() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1456,7 +1456,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("1234562")
@@ -1491,7 +1491,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportIssueDateIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1504,7 +1504,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1536,7 +1536,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportIssueBranchIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1549,7 +1549,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1582,7 +1582,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_maritalStatusIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1595,7 +1595,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1628,7 +1628,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_dependentAmountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1641,7 +1641,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1680,7 +1680,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1713,7 +1713,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_accountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1726,7 +1726,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1760,7 +1760,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_isInsuranceEnabledIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1773,7 +1773,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
@@ -1805,7 +1805,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_isSalaryClientIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)
@@ -1818,7 +1818,7 @@ class ConveyorControllerImplTest {
                                                       .lastName("test")
                                                       .middleName("test")
                                                       .gender(Gender.FEMALE)
-                                                      .birthdate(LocalDate.now()
+                                                      .birthDate(LocalDate.now()
                                                                           .minusYears(25))
                                                       .passportSeries("1234")
                                                       .passportNumber("123456")
