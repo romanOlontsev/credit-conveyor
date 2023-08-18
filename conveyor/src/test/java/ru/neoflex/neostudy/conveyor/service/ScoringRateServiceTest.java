@@ -31,7 +31,7 @@ class ScoringRateServiceTest {
     void setUp() {
         EmploymentDTO employment = EmploymentDTO.builder()
                                                 .employmentStatus(EmploymentStatus.BUSINESS_OWNER)
-                                                .employerINN("1234")
+                                                .employerInn("1234")
                                                 .salary(BigDecimal.valueOf(50000))
                                                 .position(Position.MIDDLE_MANAGER)
                                                 .workExperienceTotal(13)
@@ -44,7 +44,7 @@ class ScoringRateServiceTest {
                                        .lastName("test")
                                        .middleName("test")
                                        .gender(Gender.MALE)
-                                       .birthdate(LocalDate.now()
+                                       .birthDate(LocalDate.now()
                                                            .minusYears(25))
                                        .passportSeries("1234")
                                        .passportNumber("123456")
@@ -85,9 +85,9 @@ class ScoringRateServiceTest {
 
     @Test
     void calculateScoringRate_shouldThrowValidatedExceptionByAge() {
-        scoringDataDTO.setBirthdate(LocalDate.now());
+        scoringDataDTO.setBirthDate(LocalDate.now());
         ScoringDataDTO youngAge = scoringDataDTO;
-        scoringDataDTO.setBirthdate(LocalDate.now()
+        scoringDataDTO.setBirthDate(LocalDate.now()
                                              .minusYears(100L));
         ScoringDataDTO oldAge = scoringDataDTO;
 
@@ -230,7 +230,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_male_age_40() {
         scoringDataDTO.setGender(Gender.MALE);
-        scoringDataDTO.setBirthdate(LocalDate.now()
+        scoringDataDTO.setBirthDate(LocalDate.now()
                                              .minusYears(40));
         ScoringDataDTO male40 = scoringDataDTO;
 
@@ -243,7 +243,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_female_age_40() {
         scoringDataDTO.setGender(Gender.FEMALE);
-        scoringDataDTO.setBirthdate(LocalDate.now()
+        scoringDataDTO.setBirthDate(LocalDate.now()
                                              .minusYears(40));
         ScoringDataDTO female40 = scoringDataDTO;
 
@@ -257,7 +257,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_gender_female_age_20() {
         scoringDataDTO.setGender(Gender.FEMALE);
-        scoringDataDTO.setBirthdate(LocalDate.now()
+        scoringDataDTO.setBirthDate(LocalDate.now()
                                              .minusYears(20));
         ScoringDataDTO female40 = scoringDataDTO;
 

@@ -681,7 +681,7 @@ class ConveyorControllerImplTest {
     void calculateCredit_shouldThrowMethodArgumentNotValidException_amountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerINN("1234457")
+                                                   .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
                                                    .workExperienceTotal(15)

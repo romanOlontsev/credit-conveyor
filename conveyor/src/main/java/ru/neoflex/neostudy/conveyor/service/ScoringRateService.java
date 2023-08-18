@@ -52,7 +52,7 @@ public class ScoringRateService {
     }
 
     private void checkAge(ScoringDataDTO scoringRequest) {
-        int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
+        int age = Period.between(scoringRequest.getBirthDate(), LocalDate.now())
                         .getYears();
         int maxAge = config.creditMaxAge();
         int minAge = config.creditMinAge();
@@ -142,7 +142,7 @@ public class ScoringRateService {
     private BigDecimal getGenderRate(ScoringDataDTO scoringRequest) {
         BigDecimal zero = BigDecimal.ZERO;
         Gender gender = scoringRequest.getGender();
-        int age = Period.between(scoringRequest.getBirthdate(), LocalDate.now())
+        int age = Period.between(scoringRequest.getBirthDate(), LocalDate.now())
                         .getYears();
         switch (gender) {
             case FEMALE -> {
