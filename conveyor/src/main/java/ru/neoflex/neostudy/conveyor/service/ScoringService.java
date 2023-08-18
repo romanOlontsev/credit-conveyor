@@ -20,20 +20,24 @@ import java.util.List;
 public class ScoringService {
     private final AppConfig config;
     private final ScoringRateService scoringRateService;
+    private final static int CALCULATED_SCALE = 8;
+    private final static int PRINTED_SCALE = 2;
 
     public BigDecimal evaluateTotalAmount(Integer term, BigDecimal monthlyPayment) {
         return monthlyPayment.multiply(BigDecimal.valueOf(term))
-                             .setScale(2, RoundingMode.HALF_UP);
+                             .setScale(PRINTED_SCALE, RoundingMode.HALF_UP);
 
     }
 
     public BigDecimal calculatePreRate(Boolean isInsuranceEnabled, Boolean isSalaryClient) {
         double currentRate = config.baseRate();
         if (isInsuranceEnabled) {
-            currentRate -= 3.0;
+            currentRate -= config.rate()
+                                 .isInsuranceEnabledReduction();
         }
         if (isSalaryClient) {
-            currentRate -= 1.0;
+            currentRate -= config.rate()
+                                 .isSalaryClientReduction();
         }
         return BigDecimal.valueOf(currentRate);
     }
@@ -46,15 +50,17 @@ public class ScoringService {
     }
 
     public BigDecimal calculateMonthlyPayment(BigDecimal rate, Integer term, BigDecimal amount) {
-        BigDecimal monthlyRate = rate.divide(BigDecimal.valueOf(12), 8, RoundingMode.HALF_UP)
-                                     .divide(BigDecimal.valueOf(100), 8, RoundingMode.HALF_UP);
+        BigDecimal numberMonthsInYear = BigDecimal.valueOf(12);
+        BigDecimal oneHundredPercent = BigDecimal.valueOf(100);
+        BigDecimal monthlyRate = rate.divide(numberMonthsInYear, CALCULATED_SCALE, RoundingMode.HALF_UP)
+                                     .divide(oneHundredPercent, CALCULATED_SCALE, RoundingMode.HALF_UP);
         BigDecimal annuityRatio = monthlyRate
                 .multiply(((monthlyRate.add(BigDecimal.ONE)).pow(term))
                         .divide((monthlyRate.add(BigDecimal.ONE)).pow(term)
-                                                                 .subtract(BigDecimal.ONE), 8,
+                                                                 .subtract(BigDecimal.ONE), CALCULATED_SCALE,
                                 RoundingMode.HALF_UP));
         return annuityRatio.multiply(amount)
-                           .setScale(2, RoundingMode.HALF_UP);
+                           .setScale(PRINTED_SCALE, RoundingMode.HALF_UP);
     }
 
     public List<PaymentScheduleElement> createMonthlyPaymentSchedule(BigDecimal monthlyPayment,
@@ -66,13 +72,7 @@ public class ScoringService {
         BigDecimal remainingDebt = totalAmount;
         for (int i = 1; i <= term; i++) {
             LocalDate currentPaymentDate = creditDate.plusMonths(i);
-            int daysPerYear = currentPaymentDate.lengthOfYear();
-            int daysPerMonth = currentPaymentDate.lengthOfMonth();
-
-            BigDecimal interestPayment = remainingDebt.multiply(rate)
-                                                      .multiply(BigDecimal.valueOf(daysPerMonth))
-                                                      .divide(BigDecimal.valueOf(daysPerYear), 8, RoundingMode.HALF_UP)
-                                                      .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+            BigDecimal interestPayment = calculateInterestPayment(rate, currentPaymentDate, remainingDebt);
             BigDecimal debtPayment = monthlyPayment.subtract(interestPayment);
             remainingDebt = remainingDebt.subtract(debtPayment);
 
@@ -96,5 +96,16 @@ public class ScoringService {
             elements.add(element);
         }
         return elements;
+    }
+
+    private BigDecimal calculateInterestPayment(BigDecimal rate, LocalDate currentPaymentDate, BigDecimal remainingDebt) {
+        int daysPerYear = currentPaymentDate.lengthOfYear();
+        int daysPerMonth = currentPaymentDate.lengthOfMonth();
+        BigDecimal oneHundredPercent = BigDecimal.valueOf(100);
+
+        return remainingDebt.multiply(rate)
+                            .multiply(BigDecimal.valueOf(daysPerMonth))
+                            .divide(BigDecimal.valueOf(daysPerYear), CALCULATED_SCALE, RoundingMode.HALF_UP)
+                            .divide(oneHundredPercent, PRINTED_SCALE, RoundingMode.HALF_UP);
     }
 }
