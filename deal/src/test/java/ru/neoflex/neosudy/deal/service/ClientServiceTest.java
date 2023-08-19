@@ -123,8 +123,4 @@ class ClientServiceTest {
                                                                  .getIssueDate())
         );
     }
-
-    @Test
-    void getScoringDataDTOFromClient() {
-    }
 }

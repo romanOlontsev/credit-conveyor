@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.neoflex.neosudy.deal.model.dto.FinishRegistrationRequestDTO;
@@ -37,14 +36,15 @@ public interface DealController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))})
+    @ResponseBody
     @PostMapping(value = "/application",
             produces = {"application/json"},
             consumes = {"application/json"})
-    ResponseEntity<List<LoanOfferDTO>> calculateOffers(
+    List<LoanOfferDTO> calculateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanApplicationRequestDTO request
-    );
+                                      );
 
     @Operation(summary = "Selecting one of the offers")
     @ApiResponses(value = {
@@ -66,11 +66,11 @@ public interface DealController {
     })
     @PutMapping(value = "/offer",
             consumes = {"application/json"})
-    ResponseEntity<Void> selectOffer(
+    void selectOffer(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanOfferDTO request
-    );
+                    );
 
     @Operation(summary = "Successful registration")
     @ApiResponses(value = {
@@ -92,7 +92,7 @@ public interface DealController {
     })
     @PutMapping(value = "/calculate/{applicationId}",
             consumes = {"application/json"})
-    ResponseEntity<Void> finishRegistration(
+    void finishRegistration(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
             @PathVariable String applicationId,

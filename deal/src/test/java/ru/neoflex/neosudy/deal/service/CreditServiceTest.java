@@ -48,7 +48,7 @@ class CreditServiceTest {
         assertAll(
                 () -> assertThat(response).isNotNull()
                                           .isEqualTo(expectedCredit)
-        );
+                 );
     }
 
     @Test
@@ -73,7 +73,7 @@ class CreditServiceTest {
                                              .isEqualTo(credit.getSalaryClient()),
                 () -> assertThat(scoringData).extracting(ScoringDataDTO::getIsInsuranceEnabled)
                                              .isEqualTo(credit.getInsuranceEnable())
-        );
+                 );
     }
 
     @Test
@@ -104,6 +104,6 @@ class CreditServiceTest {
         assertAll(
                 () -> assertThat(credit).isNotNull()
                                         .isEqualTo(expectedCredit)
-        );
+                 );
     }
 }

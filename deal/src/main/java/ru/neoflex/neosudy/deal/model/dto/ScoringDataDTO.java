@@ -2,7 +2,6 @@ package ru.neoflex.neosudy.deal.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import ru.neoflex.neostudy.conveyor.model.dto.EmploymentDTO;
 import ru.neoflex.neosudy.deal.model.types.Gender;
 import ru.neoflex.neosudy.deal.model.types.MaritalStatus;
 
@@ -43,7 +42,7 @@ public class ScoringDataDTO {
     @JsonProperty(value = "dependent_amount")
     private Integer dependentAmount;
     @JsonProperty(value = "employment")
-    private EmploymentDTO employment;
+    private EmploymentDto employment;
     @JsonProperty(value = "account")
     private String account;
     @JsonProperty(value = "is_insurance_enabled")
