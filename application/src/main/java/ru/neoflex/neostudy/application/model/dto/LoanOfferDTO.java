@@ -1,4 +1,4 @@
-package ru.neoflex.neosudy.deal.model.dto;
+package ru.neoflex.neostudy.application.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @ToString
 @EqualsAndHashCode
