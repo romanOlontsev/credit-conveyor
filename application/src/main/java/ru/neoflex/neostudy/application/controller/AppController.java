@@ -37,7 +37,7 @@ public interface AppController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))})
     @ResponseBody
-    @PostMapping(value = "/",
+    @PostMapping(value = "",
             produces = {"application/json"},
             consumes = {"application/json"})
     List<LoanOfferDTO> createApplication(

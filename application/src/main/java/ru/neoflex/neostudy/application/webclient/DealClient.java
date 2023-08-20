@@ -9,7 +9,7 @@ import ru.neoflex.neostudy.application.model.dto.LoanOfferDTO;
 
 import java.util.List;
 
-@FeignClient(value = "deal", url = "${deal.client.base-url}")
+@FeignClient(value = "deal", url = "${deal.client.base-url}", configuration = CustomErrorDecoder.class)
 public interface DealClient {
 
     @PostMapping(value = "/application",

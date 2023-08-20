@@ -10,7 +10,7 @@ import ru.neoflex.neosudy.deal.model.dto.ScoringDataDTO;
 
 import java.util.List;
 
-@FeignClient(value = "conveyor", url = "${conveyor.client.base-url}")
+@FeignClient(value = "conveyor", url = "${conveyor.client.base-url}", configuration = CustomErrorDecoder.class)
 public interface CreditConveyorClient {
 
     @PostMapping(value = "/offers",

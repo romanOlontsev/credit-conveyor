@@ -14,7 +14,6 @@ import java.util.List;
 public class AppControllerImpl implements AppController {
     private final ApplicationService service;
 
-
     @Override
     public List<LoanOfferDTO> createApplication(LoanApplicationRequestDTO prescoringRequest) {
         return service.createApplication(prescoringRequest);

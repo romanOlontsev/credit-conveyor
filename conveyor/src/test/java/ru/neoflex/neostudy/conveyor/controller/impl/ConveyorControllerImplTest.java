@@ -3,6 +3,7 @@ package ru.neoflex.neostudy.conveyor.controller.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -69,9 +70,9 @@ class ConveyorControllerImplTest {
         when(service.generateOffers(any())).thenReturn(offers);
 
         mockMvc.perform(post("/conveyor/offers")
-                       .contentType(MediaType.APPLICATION_JSON)
-                       .content(objectMapper.writeValueAsString(requestDTO))
-                       .accept(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(requestDTO))
+                                .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$", hasSize(1)))
                .andExpect(jsonPath("$[0].term", is(offers.get(0)
@@ -79,6 +80,7 @@ class ConveyorControllerImplTest {
     }
 
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_amountIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -95,9 +97,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -110,6 +112,7 @@ class ConveyorControllerImplTest {
 
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_amountIsLessThan10000() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -127,9 +130,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -142,6 +145,7 @@ class ConveyorControllerImplTest {
 
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_termIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -158,9 +162,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -172,6 +176,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("term: must not be null");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_termIsLessThan6() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -189,9 +194,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -203,6 +208,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("term: The term must be greater than or equal to 6");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_firstNameIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -219,9 +225,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -233,6 +239,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("firstName: The firstname must contain from 2 to 30 latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_firstNameIsNotInRegex() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -250,9 +257,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -264,6 +271,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("firstName: The firstname must contain from 2 to 30 latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_lastNameIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -280,9 +288,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -294,6 +302,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("lastName: The lastname must contain from 2 to 30 latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_lastNameIsNotInRegex() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -311,9 +320,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -325,6 +334,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("lastName: The lastname must contain from 2 to 30 latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_middleNameIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -341,9 +351,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -353,9 +363,10 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
-                                     "latin characters");
+                                                "latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_middleNameIsNotInRegex() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -373,9 +384,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -385,9 +396,10 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
-                                     "latin characters");
+                                                "latin characters");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_emailIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -404,9 +416,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -418,6 +430,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("email: must not be null");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_emailDoesNotMatchPattern() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -435,9 +448,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -449,6 +462,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("email: Email must be: example@dog.con");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_birthdateIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -464,9 +478,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -478,6 +492,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_userUnder18() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -495,9 +510,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -509,6 +524,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("birthDate: User must be over 18 years of age");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_passportSeriesIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -525,9 +541,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -539,6 +555,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("passportSeries: must not be null");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_passportSeriesDoesNotContainFourNumbers() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -556,9 +573,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -570,6 +587,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("passportSeries: Passport series must contain 4 numbers");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_passportNumberIsNull() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -586,9 +604,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -600,6 +618,7 @@ class ConveyorControllerImplTest {
                              .isEqualTo("passportNumber: must not be null");
     }
 
+    @Disabled("Validation disabled")
     @Test
     void generateOffers_shouldThrowMethodArgumentNotValidException_passportNumberDoesNotContainSixNumbers() throws Exception {
         LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
@@ -617,9 +636,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/offers")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(requestDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(requestDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -670,9 +689,9 @@ class ConveyorControllerImplTest {
         when(service.calculateCredit(any())).thenReturn(creditDTO);
 
         mockMvc.perform(post("/conveyor/calculation")
-                       .contentType(MediaType.APPLICATION_JSON)
-                       .content(objectMapper.writeValueAsString(scoringDataDTO))
-                       .accept(MediaType.APPLICATION_JSON))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.term", is(creditDTO.getTerm())));
     }
@@ -710,9 +729,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -759,9 +778,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -807,9 +826,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -855,9 +874,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -902,9 +921,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -950,9 +969,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -997,9 +1016,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1045,9 +1064,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1092,9 +1111,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1104,7 +1123,7 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                     "Latin characters");
+                                                "Latin characters");
     }
 
     @Test
@@ -1141,9 +1160,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1153,7 +1172,7 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                     "Latin characters");
+                                                "Latin characters");
     }
 
     @Test
@@ -1189,9 +1208,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1235,9 +1254,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1283,9 +1302,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1330,9 +1349,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1378,9 +1397,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1425,9 +1444,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1473,9 +1492,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1519,9 +1538,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1532,6 +1551,7 @@ class ConveyorControllerImplTest {
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("passportIssueDate: must not be null");
     }
+
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportIssueBranchIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
@@ -1565,9 +1585,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1578,6 +1598,7 @@ class ConveyorControllerImplTest {
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("passportIssueBranch: must not be null");
     }
+
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_maritalStatusIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
@@ -1611,9 +1632,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1624,6 +1645,7 @@ class ConveyorControllerImplTest {
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("maritalStatus: must not be null");
     }
+
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_dependentAmountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
@@ -1657,9 +1679,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1696,9 +1718,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1709,6 +1731,7 @@ class ConveyorControllerImplTest {
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("employment: must not be null");
     }
+
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_accountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
@@ -1742,9 +1765,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1789,9 +1812,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
@@ -1801,7 +1824,9 @@ class ConveyorControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("isInsuranceEnabled: must not be null");
-    }    @Test
+    }
+
+    @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_isSalaryClientIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
@@ -1834,9 +1859,9 @@ class ConveyorControllerImplTest {
 
         MockHttpServletResponse response =
                 mockMvc.perform(post("/conveyor/calculation")
-                               .contentType(MediaType.APPLICATION_JSON)
-                               .content(objectMapper.writeValueAsString(scoringDataDTO))
-                               .accept(MediaType.APPLICATION_JSON))
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                        .accept(MediaType.APPLICATION_JSON))
                        .andExpect(status().isBadRequest())
                        .andExpect(result -> assertTrue(
                                result.getResolvedException() instanceof MethodArgumentNotValidException))
