@@ -1,4 +1,4 @@
-package ru.neoflex.neostudy.conveyor.controller;
+package ru.neoflex.neostudy.application.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -10,26 +10,21 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import ru.neoflex.neostudy.conveyor.model.dto.CreditDTO;
-import ru.neoflex.neostudy.conveyor.model.dto.LoanApplicationRequestDTO;
-import ru.neoflex.neostudy.conveyor.model.dto.LoanOfferDTO;
-import ru.neoflex.neostudy.conveyor.model.dto.ScoringDataDTO;
-import ru.neoflex.neostudy.conveyor.model.response.ApiErrorResponse;
+import org.springframework.web.bind.annotation.*;
+import ru.neoflex.neostudy.application.model.dto.LoanApplicationRequestDTO;
+import ru.neoflex.neostudy.application.model.dto.LoanOfferDTO;
+import ru.neoflex.neostudy.application.model.response.ApiErrorResponse;
 
 import java.util.List;
 
 @Validated
-@RequestMapping("/conveyor")
-public interface ConveyorController {
-    @Operation(summary = "Calculation of possible credit conditions")
+@RequestMapping("/application")
+public interface AppController {
+    @Operation(summary = "Create application")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Calculation of possible credit conditions is successful",
+                    description = "Create application is successful",
                     content = @Content(
                             mediaType = "application/json",
                             array = @ArraySchema(
@@ -42,39 +37,37 @@ public interface ConveyorController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))})
     @ResponseBody
-    @PostMapping(value = "/offers",
+    @PostMapping(value = "",
             produces = {"application/json"},
             consumes = {"application/json"})
-    List<LoanOfferDTO> generateOffers(
+    List<LoanOfferDTO> createApplication(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-            @RequestBody LoanApplicationRequestDTO prescoringRequest
-    );
+            @Valid
+            @RequestBody LoanApplicationRequestDTO prescoringRequest);
 
-    @Operation(summary = "Calculation of credit")
+    @Operation(summary = "Selecting one of the offers")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Calculation of credit is successful",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(
-                                    implementation = CreditDTO.class))),
+                    description = "Offer selection was successful"),
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request parameters",
                     content = @Content(
                             mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    @ResponseBody
-    @PostMapping(value = "/calculation",
-            produces = {"application/json"},
+    @PutMapping(value = "/offer",
             consumes = {"application/json"})
-    CreditDTO calculateCredit(
+    void applyOffer(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-            @Valid
-            @RequestBody ScoringDataDTO scoringRequest
-    );
+            @RequestBody LoanOfferDTO request);
 }
