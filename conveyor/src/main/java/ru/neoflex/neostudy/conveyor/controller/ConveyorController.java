@@ -48,7 +48,6 @@ public interface ConveyorController {
     List<LoanOfferDTO> generateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-            @Valid
             @RequestBody LoanApplicationRequestDTO prescoringRequest
     );
 

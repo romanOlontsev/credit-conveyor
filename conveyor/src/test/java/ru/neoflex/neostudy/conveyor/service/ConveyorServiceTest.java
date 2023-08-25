@@ -74,7 +74,7 @@ class ConveyorServiceTest {
     @Test
     void calculateCredit_shouldReturnCreditDto() {
         EmploymentDTO employment = EmploymentDTO.builder()
-                                                .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                .status(EmploymentStatus.SELF_EMPLOYED)
                                                 .employerInn("321123")
                                                 .salary(BigDecimal.valueOf(50000))
                                                 .position(Position.MIDDLE_MANAGER)

@@ -23,7 +23,7 @@ public class CustomExceptionHandler {
     public ApiErrorResponse handle(RuntimeException e) {
         String message = e.getMessage();
         log.error(message);
-        return getApiErrorResponse(e, "400", message);
+        return getApiErrorResponse(e, message);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -35,12 +35,12 @@ public class CustomExceptionHandler {
                 .map(it -> it.getField() + ": " + it.getDefaultMessage())
                 .collect(Collectors.joining("; "));
         log.error(message);
-        return getApiErrorResponse(e, "400", message);
+        return getApiErrorResponse(e, message);
     }
 
-    private ApiErrorResponse getApiErrorResponse(Exception e, String code, String description) {
+    private ApiErrorResponse getApiErrorResponse(Exception e, String description) {
         ApiErrorResponse exceptionResponse = ApiErrorResponse.builder()
-                .code(code)
+                .code("400")
                 .description(description)
                 .exceptionName(e.getClass()
                         .getName())
