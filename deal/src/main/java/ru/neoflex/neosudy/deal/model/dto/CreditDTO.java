@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import ru.neoflex.neostudy.conveyor.model.dto.PaymentScheduleElement;
+import ru.neoflex.neosudy.deal.model.jsonb.PaymentScheduleElement;
 
 import java.math.BigDecimal;
 import java.util.List;

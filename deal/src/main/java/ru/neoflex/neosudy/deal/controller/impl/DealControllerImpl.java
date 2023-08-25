@@ -1,8 +1,6 @@
 package ru.neoflex.neosudy.deal.controller.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import ru.neoflex.neosudy.deal.controller.DealController;
 import ru.neoflex.neosudy.deal.model.dto.FinishRegistrationRequestDTO;
@@ -18,20 +16,32 @@ public class DealControllerImpl implements DealController {
     private final DealService service;
 
     @Override
-    public ResponseEntity<List<LoanOfferDTO>> calculateOffers(LoanApplicationRequestDTO request) {
-        List<LoanOfferDTO> offers = service.getOffers(request);
-        return new ResponseEntity<>(offers, HttpStatus.OK);
+    public List<LoanOfferDTO> calculateOffers(LoanApplicationRequestDTO request) {
+        return service.getOffers(request);
     }
 
     @Override
-    public ResponseEntity<Void> selectOffer(LoanOfferDTO request) {
+    public void selectOffer(LoanOfferDTO request) {
         service.selectOffer(request);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> finishRegistration(String applicationId, FinishRegistrationRequestDTO request) {
+    public void finishRegistration(String applicationId, FinishRegistrationRequestDTO request) {
         service.finishRegistration(applicationId, request);
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Override
+    public void sendDocuments(String applicationId) {
+        service.sendDocuments(applicationId);
+    }
+
+    @Override
+    public void signDocuments(String applicationId) {
+        service.signDocuments(applicationId);
+    }
+
+    @Override
+    public void verifySesCode(String applicationId) {
+        service.verifySesCode(applicationId);
     }
 }

@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.neoflex.neosudy.deal.model.dto.FinishRegistrationRequestDTO;
@@ -40,7 +39,7 @@ public interface DealController {
     @PostMapping(value = "/application",
             produces = {"application/json"},
             consumes = {"application/json"})
-    ResponseEntity<List<LoanOfferDTO>> calculateOffers(
+    List<LoanOfferDTO> calculateOffers(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanApplicationRequestDTO request
@@ -66,7 +65,7 @@ public interface DealController {
     })
     @PutMapping(value = "/offer",
             consumes = {"application/json"})
-    ResponseEntity<Void> selectOffer(
+    void selectOffer(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanOfferDTO request
@@ -92,7 +91,7 @@ public interface DealController {
     })
     @PutMapping(value = "/calculate/{applicationId}",
             consumes = {"application/json"})
-    ResponseEntity<Void> finishRegistration(
+    void finishRegistration(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
             @PathVariable String applicationId,
@@ -100,5 +99,57 @@ public interface DealController {
                     required = true)
             @RequestBody FinishRegistrationRequestDTO request);
 
+    @Operation(summary = "Send documents to the client")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Documents sent successfully"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PostMapping(value = "/document/{applicationId}/send")
+    void sendDocuments(
+            @Parameter(in = ParameterIn.PATH,
+                    required = true)
+            @PathVariable String applicationId);
 
+    @Operation(summary = "Sign documents")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Documents signed successfully"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PostMapping(value = "/document/{applicationId}/sign")
+    void signDocuments(
+            @Parameter(in = ParameterIn.PATH,
+                    required = true)
+            @PathVariable String applicationId);
+
+    @Operation(summary = "Verify Ses code")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Ses cod verified successfully"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PostMapping(value = "/document/{applicationId}/code")
+    void verifySesCode(
+            @Parameter(in = ParameterIn.PATH,
+                    required = true)
+            @PathVariable String applicationId);
 }

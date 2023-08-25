@@ -77,7 +77,7 @@ public class ScoringRateService {
     private BigDecimal getEmploymentStatusRate(ScoringDataDTO scoringRequest) {
         BigDecimal zero = BigDecimal.ZERO;
         EmploymentStatus employmentStatus = scoringRequest.getEmployment()
-                                                          .getEmploymentStatus();
+                                                          .getStatus();
         switch (employmentStatus) {
             case UNEMPLOYED -> throw new ValidationException("Credit denial: employment status - unemployed");
             case SELF_EMPLOYED -> {

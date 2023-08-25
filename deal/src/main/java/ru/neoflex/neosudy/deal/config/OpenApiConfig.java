@@ -1,4 +1,4 @@
-package ru.neoflex.neosudy.deal.configuration;
+package ru.neoflex.neosudy.deal.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

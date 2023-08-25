@@ -22,6 +22,6 @@ public interface ClientMapper {
     @Mapping(source = "passport.number", target = "passportNumber")
     @Mapping(source = "passport.issueBranch", target = "passportIssueBranch")
     @Mapping(source = "passport.issueDate", target = "passportIssueDate")
-    @Mapping(source = "employment.status", target = "employment.employmentStatus")
+    @Mapping(source = "employment.status", target = "employment.status")
     ScoringDataDTO clientToScoringData(Client client);
 }
