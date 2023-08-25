@@ -1,4 +1,4 @@
-package ru.neoflex.neostudy.application.webclient;
+package ru.neoflex.neostudy.deal.webclient;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,9 +7,8 @@ import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
-import ru.neoflex.neostudy.application.exception.BadRequestException;
-import ru.neoflex.neostudy.application.exception.DataNotFoundException;
-import ru.neoflex.neostudy.application.model.response.ApiErrorResponse;
+import ru.neoflex.neostudy.deal.exception.BadRequestException;
+import ru.neoflex.neostudy.deal.model.response.ApiErrorResponse;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -50,13 +49,11 @@ public class CustomErrorDecoder implements ErrorDecoder {
                 log.error("Failed to close the reader with error: ", e);
             }
         }
-        switch (response.status()) {
-            case 400 -> throw new BadRequestException(message);
-            case 404 -> throw new DataNotFoundException(message);
-            default -> {
-                return errorDecoder.decode(s, response);
-            }
+
+        if (response.status() == 400) {
+            throw new BadRequestException(message);
         }
+        return errorDecoder.decode(s, response);
     }
 
     private String getResponseBodyAsString(final Response.Body body) {
