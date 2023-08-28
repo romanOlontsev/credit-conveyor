@@ -10,9 +10,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.neoflex.neostudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neostudy.deal.model.dto.FinishRegistrationRequestDTO;
 import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
+import ru.neoflex.neostudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neostudy.deal.model.response.ApiErrorResponse;
 
 import java.util.List;
@@ -112,7 +112,7 @@ public interface DealController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    @PostMapping(value = "/document/{applicationId}/send")
+    @PutMapping(value = "/document/{applicationId}/send")
     void sendDocuments(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
@@ -130,7 +130,7 @@ public interface DealController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    @PostMapping(value = "/document/{applicationId}/sign")
+    @PutMapping(value = "/document/{applicationId}/sign")
     void signDocuments(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
@@ -148,9 +148,13 @@ public interface DealController {
                             mediaType = "application/json",
                             schema = @Schema(implementation = ApiErrorResponse.class)))
     })
-    @PostMapping(value = "/document/{applicationId}/code")
+    @PutMapping(value = "/document/{applicationId}/code")
     void verifySesCode(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
             @PathVariable String applicationId);
+
+
+    @GetMapping(value = "/test")
+    void test();
 }

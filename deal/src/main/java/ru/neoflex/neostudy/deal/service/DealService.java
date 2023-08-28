@@ -117,4 +117,9 @@ public class DealService {
                                            .build();
         kafkaService.sendEmailMessage(theme, message);
     }
+
+    public void test() {
+        kafkaService.sendEmailMessage(Theme.APPLICATION_DENIED, EmailMessage.builder()
+                                                                            .build());
+    }
 }

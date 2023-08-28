@@ -44,4 +44,9 @@ public class DealControllerImpl implements DealController {
     public void verifySesCode(String applicationId) {
         service.verifySesCode(applicationId);
     }
+
+    @Override
+    public void test() {
+        service.test();
+    }
 }

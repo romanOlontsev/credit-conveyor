@@ -9,7 +9,6 @@ public enum Theme {
     FINISH_REGISTRATION("finish-registration"),
     CREATE_DOCUMENTS("create-documents"),
     SEND_DOCUMENTS("send-documents"),
-    SIGN_DOCUMENTS("sign-documents"),
     SEND_SES("send-ses"),
     CREDIT_ISSUED("credit-issued"),
     APPLICATION_DENIED("application-denied");
