@@ -8,6 +8,7 @@ import ru.neoflex.neostudy.deal.model.dto.*;
 import ru.neoflex.neostudy.deal.model.entity.Application;
 import ru.neoflex.neostudy.deal.model.entity.Client;
 import ru.neoflex.neostudy.deal.model.entity.Credit;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
 import ru.neoflex.neostudy.deal.model.response.EmailMessage;
 import ru.neoflex.neostudy.deal.model.types.ApplicationStatus;
 import ru.neoflex.neostudy.deal.model.types.Theme;
@@ -118,8 +119,18 @@ public class DealService {
         kafkaService.sendEmailMessage(theme, message);
     }
 
-    public void test() {
+    //     TODO
+//        UPDATE STATUS
+    @Transactional
+    public ApplicationDTO updateApplicationStatus(String applicationId) {
+        Application foundApplication = applicationService.findApplicationById(Long.valueOf(applicationId));
+
+        return applicationService.getApplicationInfoFromApplication(foundApplication);
+    }
+
+    public void test(Long id) {
         kafkaService.sendEmailMessage(Theme.APPLICATION_DENIED, EmailMessage.builder()
+                                                                            .applicationId(id)
                                                                             .build());
     }
 }

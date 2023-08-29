@@ -7,19 +7,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import ru.neoflex.neostudy.dossier.exception.EmailMessageException;
+import ru.neoflex.neostudy.dossier.model.dto.ApplicationDTO;
 import ru.neoflex.neostudy.dossier.model.request.EmailMessage;
 import ru.neoflex.neostudy.dossier.model.utils.ThymeleafAttribute;
 import ru.neoflex.neostudy.dossier.utils.PdfConverter;
+import ru.neoflex.neostudy.dossier.webclient.DealClient;
 
 import java.io.IOException;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailMessageService {
+public class MessageService {
 
     private final EmailService emailService;
     private final PdfConverter pdfConverter;
+    private final DealClient dealClient;
 
     @Value("${gateway.client.base-url}")
     private String baseUrl;
@@ -30,7 +33,7 @@ public class EmailMessageService {
         String subject = "Please complete the loan application";
         attribute.setTitle("Please complete the loan application");
         attribute.setMessage("You have chosen one of the conditions offered by us. Please fill out the form to " +
-                                     "calculate the total cost of the loan. Link to the form below.");
+                "calculate the total cost of the loan. Link to the form below.");
         attribute.setButtonName("Fill in the form");
         attribute.setUrl(baseUrl + "/application/registration/" + emailMessage.getApplicationId());
         sendEmail(emailMessage, attribute, subject);
@@ -42,8 +45,8 @@ public class EmailMessageService {
         String subject = "Preparation of documents for obtaining a loan";
         attribute.setTitle("Please confirm the preparation of documents");
         attribute.setMessage("Your loan calculation has been completed. To confirm the paperwork, please follow " +
-                                     "the link below. In response, you will receive an email with completed " +
-                                     "documents.");
+                "the link below. In response, you will receive an email with completed " +
+                "documents.");
         attribute.setButtonName("Prepare documents");
         attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId());
         sendEmail(emailMessage, attribute, subject);
@@ -55,7 +58,7 @@ public class EmailMessageService {
         String subject = "Your documents for issuing a loan";
         attribute.setTitle("Documents received");
         attribute.setMessage("Please check their correctness and follow the link to get a simple electronic " +
-                                     "signature.");
+                "signature.");
         attribute.setButtonName("Get SES code");
         attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId() + "/sign");
         sendEmail(emailMessage, attribute, subject);
@@ -67,7 +70,7 @@ public class EmailMessageService {
         String subject = "Your documents and SES code have been created";
         attribute.setTitle("Your documents and SES code are ready");
         attribute.setMessage("Please sign documents with ses code. As soon as your application is accepted, " +
-                                     "you will be sent an email confirming the issuance of the loan.");
+                "you will be sent an email confirming the issuance of the loan.");
         attribute.setButtonName("Sign documents ");
         attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId() + "/sign/code");
         sendEmail(emailMessage, attribute, subject);
@@ -79,14 +82,15 @@ public class EmailMessageService {
         String subject = "Your loan has been successfully approved";
         attribute.setTitle("Our congratulations!");
         attribute.setMessage("Your loan has been successfully approved. The money will be credited to the " +
-                                     "specified account within 24 hours.");
+                "specified account within 24 hours.");
         attribute.setHiddenButton(true);
         sendEmail(emailMessage, attribute, subject);
     }
 
     @KafkaListener(topics = "application-denied")
     public void listenApplicationDeniedTopic(EmailMessage emailMessage) throws IOException {
-        pdfConverter.execute();
+        ApplicationDTO applicationDTO = dealClient.updateApplicationStatus(String.valueOf(emailMessage.getApplicationId()));
+        pdfConverter.execute("personal-data", applicationDTO);
         log.info("ok");
     }
 

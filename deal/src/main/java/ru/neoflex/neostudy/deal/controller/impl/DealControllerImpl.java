@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.neoflex.neostudy.deal.controller.DealController;
 import ru.neoflex.neostudy.deal.model.dto.LoanOfferDTO;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
 import ru.neoflex.neostudy.deal.service.DealService;
 import ru.neoflex.neostudy.deal.model.dto.FinishRegistrationRequestDTO;
 import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
@@ -46,7 +47,12 @@ public class DealControllerImpl implements DealController {
     }
 
     @Override
-    public void test() {
-        service.test();
+    public ApplicationDTO updateApplicationStatus(String applicationId) {
+        return service.updateApplicationStatus(applicationId);
+    }
+
+    @Override
+    public void test(Long id) {
+        service.test(id);
     }
 }

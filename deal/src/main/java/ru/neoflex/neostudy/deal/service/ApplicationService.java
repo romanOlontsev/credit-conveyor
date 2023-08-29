@@ -3,9 +3,11 @@ package ru.neoflex.neostudy.deal.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.neoflex.neostudy.deal.mapper.ApplicationMapper;
 import ru.neoflex.neostudy.deal.model.entity.Application;
 import ru.neoflex.neostudy.deal.model.entity.Client;
 import ru.neoflex.neostudy.deal.model.jsonb.StatusHistory;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
 import ru.neoflex.neostudy.deal.model.types.ChangeType;
 import ru.neoflex.neostudy.deal.exception.DataNotFoundException;
 import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
@@ -19,6 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ApplicationService {
+    private final ApplicationMapper applicationMapper;
     private final ApplicationRepository applicationRepository;
     private final ClientService clientService;
 
@@ -55,5 +58,9 @@ public class ApplicationService {
             application.getStatusHistory()
                        .add(statusHistory);
         }
+    }
+
+    public ApplicationDTO getApplicationInfoFromApplication(Application application) {
+        return applicationMapper.applicationToApplicationInfo(application);
     }
 }

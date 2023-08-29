@@ -42,7 +42,7 @@ public class ScoringDataDTO {
     @JsonProperty(value = "dependent_amount")
     private Integer dependentAmount;
     @JsonProperty(value = "employment")
-    private EmploymentDto employment;
+    private EmploymentDTO employment;
     @JsonProperty(value = "account")
     private String account;
     @JsonProperty(value = "is_insurance_enabled")

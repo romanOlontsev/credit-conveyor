@@ -14,6 +14,7 @@ import ru.neoflex.neostudy.deal.model.dto.FinishRegistrationRequestDTO;
 import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.deal.model.dto.LoanOfferDTO;
 import ru.neoflex.neostudy.deal.model.response.ApiErrorResponse;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public interface DealController {
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanApplicationRequestDTO request
-                                      );
+    );
 
     @Operation(summary = "Selecting one of the offers")
     @ApiResponses(value = {
@@ -70,7 +71,7 @@ public interface DealController {
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody LoanOfferDTO request
-                    );
+    );
 
     @Operation(summary = "Successful registration")
     @ApiResponses(value = {
@@ -154,7 +155,30 @@ public interface DealController {
                     required = true)
             @PathVariable String applicationId);
 
+    @Operation(summary = "Update application status")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Status updated successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(
+                                    implementation = ApplicationDTO.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Application not found",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ApiErrorResponse.class)))
+    })
+    @PutMapping(value = "admin/application/{applicationId}/status",
+            produces = "application/json")
+    ApplicationDTO updateApplicationStatus(
+            @Parameter(in = ParameterIn.PATH,
+                    required = true)
+            @PathVariable String applicationId);
 
-    @GetMapping(value = "/test")
-    void test();
+
+    @GetMapping(value = "/test/{id}")
+    void test(@PathVariable Long id);
 }

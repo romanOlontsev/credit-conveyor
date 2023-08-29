@@ -25,7 +25,7 @@ public class FinishRegistrationRequestDTO {
     @JsonProperty(value = "passport_issue_branch")
     private String passportIssueBranch;
     @JsonProperty(value = "employment")
-    private EmploymentDto employment;
+    private EmploymentDTO employment;
     @JsonProperty(value = "account")
     private String account;
 

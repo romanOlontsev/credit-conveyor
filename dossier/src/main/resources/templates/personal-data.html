@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        .column-3 {
+            float: left;
+            width: 33.33%;
+        }
+
+        h3 {
+            margin-top: 40px;
+            margin-bottom: 10px;
+        }
+
+        p.small {
+            line-height: 1.0;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        p.big {
+            line-height: 1.8;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .col-color-grey {
+            background-color: #E6DAD8;
+        }
+
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <img class="center"
+         src="https://neostudy.neoflex.ru/pluginfile.php/1/core_admin/logocompact/300x300/1692706424/logo_full.png"
+         alt="" width="150" height="72">
+    <h1 style="text-align: center">Personal Information</h1>
+    <p style="font-size: 20px; text-align: center">The loan will be issued based on these personal data. Please check
+        them before
+        signing.</p>
+</div>
+<h3>Client:</h3>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Firstname</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+
+            <p class="big">Lastname</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Middlename</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small" th:text="${firstname}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${lastname}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${middlename}"></p>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Gender</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Passport series</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Passport number</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small" th:text="${gender}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${passport_series}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${passport_number}"></p>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Issue branch</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Issue date</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">&nbsp</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small">issue_branch!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">issue_date!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">&nbsp</p>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Email</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Marital status</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Dependent amount</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small">email!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">marital_status!!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">dependent_amount!</p>
+    </div>
+</div>
+
+<h3 style="margin-top: 300px">Employment:</h3>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Employment status</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">INN</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Position</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small">employment_status!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">employer_inn!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">position!</p>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Salary</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Total work experience</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Current work experience</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small">salary!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">work_experience_total!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">work_experience_current!</p>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 300px; text-align: center">
+    <div class="column-3">
+        <b>
+            <p class="big">&nbsp</p>
+        </b>
+    </div>
+    <div class="column-3">
+        <b>
+            <p class="big">Date</p>
+        </b>
+    </div>
+    <div class="column-3">
+        <b>
+            <p class="big">Sign</p>
+        </b>
+    </div>
+</div>
+<div class="row" style="text-align: center">
+    <div class="column-3">
+        <p class="small">&nbsp</p>
+    </div>
+    <div class="column-3">
+        <p class="small">date!</p>
+    </div>
+    <div class="column-3">
+        <p class="small">___________</p>
+    </div>
+</div>
+</body>
+</html>
