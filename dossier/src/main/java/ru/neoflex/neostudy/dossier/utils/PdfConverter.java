@@ -8,15 +8,13 @@ import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import ru.neoflex.neostudy.dossier.model.dto.ApplicationDTO;
-import ru.neoflex.neostudy.dossier.model.dto.ClientDTO;
-import ru.neoflex.neostudy.dossier.model.dto.PassportDTO;
+import ru.neoflex.neostudy.dossier.model.dto.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.regex.Pattern;
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -24,24 +22,14 @@ public class PdfConverter {
 
     private final TemplateEngine templateEngine;
 
-    public void execute(String htmlName, ApplicationDTO applicationInfo) throws IOException {
+    public void execute(String htmlName, ApplicationDTO applicationInfo, Long applicationId) throws IOException {
         String process = substituteInTemplate(htmlName, applicationInfo);
         Document xhtml = getXhtml(process);
-        generatePdf(htmlName, xhtml);
-
-//        try (OutputStream outputStream = new FileOutputStream(outputPdf)) {
-//            ITextRenderer renderer = new ITextRenderer();
-//            SharedContext sharedContext = renderer.getSharedContext();
-//            sharedContext.setPrint(true);
-//            sharedContext.setInteractive(false);
-//            renderer.setDocumentFromString(xhtml.html());
-//            renderer.layout();
-//            renderer.createPDF(outputStream);
-//        }
+        generatePdf(htmlName, xhtml, applicationId);
     }
 
-    private void generatePdf(String htmlName, Document xhtml) throws IOException {
-        String pdfOutput = "dossier/src/main/resources/document/" + htmlName + ".pdf";
+    private void generatePdf(String htmlName, Document xhtml, Long applicationId) throws IOException {
+        String pdfOutput = String.format("dossier/src/main/resources/document/%s-%d.pdf", htmlName, applicationId);
         File outputPdf = new File(pdfOutput);
         try (OutputStream os = new FileOutputStream(outputPdf)) {
             PdfRendererBuilder builder = new PdfRendererBuilder();
@@ -63,19 +51,41 @@ public class PdfConverter {
         Context context = new Context();
         ClientDTO client = applicationInfo.getClient();
         PassportDTO passport = client.getPassport();
+        EmploymentDTO employment = client.getEmployment();
+        CreditDTO credit = applicationInfo.getCredit();
         context.setVariable("firstname", client.getFirstName());
         context.setVariable("lastname", client.getLastName());
         context.setVariable("middlename", client.getMiddleName());
-        context.setVariable("gender", client.getGender().getText());
+        context.setVariable("gender", client.getGender()
+                                            .getText());
         context.setVariable("passport_series", passport.getSeries());
         context.setVariable("passport_number", passport.getNumber());
-        return templateEngine.process(htmlName, context);
-    }
+        context.setVariable("issue_branch", passport.getIssueBranch());
+        context.setVariable("issue_date", passport.getIssueDate());
+        context.setVariable("email", client.getEmail());
+        context.setVariable("marital_status", client.getMaritalStatus()
+                                                    .getText());
+        context.setVariable("dependent_amount", client.getDependentAmount());
+        context.setVariable("employment_status", employment.getStatus()
+                                                           .getText());
+        context.setVariable("employer_inn", employment.getEmployerInn());
+        context.setVariable("position", employment.getPosition()
+                                                  .getText());
+        context.setVariable("salary", employment.getSalary());
+        context.setVariable("work_experience_total", employment.getWorkExperienceTotal());
+        context.setVariable("work_experience_current", employment.getWorkExperienceCurrent());
 
-    private String capitalizeFirstLetter(String string) {
-        return Pattern.compile("^.")
-                      .matcher(string)
-                      .replaceFirst(m -> m.group()
-                                          .toUpperCase());
+        context.setVariable("amount", credit.getAmount());
+        context.setVariable("term", credit.getTerm());
+        context.setVariable("rate", credit.getRate());
+        context.setVariable("psk", credit.getPsk());
+        context.setVariable("monthly_payment", credit.getMonthlyPayment());
+        context.setVariable("insurance_enable", credit.getIsInsuranceEnabled());
+        context.setVariable("salary_client", credit.getIsSalaryClient());
+
+        context.setVariable("payments", credit.getPaymentSchedule());
+        context.setVariable("date", LocalDate.now());
+
+        return templateEngine.process(htmlName, context);
     }
 }

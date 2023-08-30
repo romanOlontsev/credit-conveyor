@@ -37,6 +37,10 @@
             margin-right: auto;
         }
 
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
     </style>
 </head>
 <body>
@@ -44,10 +48,7 @@
     <img class="center"
          src="https://neostudy.neoflex.ru/pluginfile.php/1/core_admin/logocompact/300x300/1692706424/logo_full.png"
          alt="" width="150" height="72">
-    <h1 style="text-align: center">Personal Information</h1>
-    <p style="font-size: 20px; text-align: center">The loan will be issued based on these personal data. Please check
-        them before
-        signing.</p>
+    <h1 style="text-align: center">Loan agreement conditions</h1>
 </div>
 <h3>Client:</h3>
 <div class="row">
@@ -58,7 +59,6 @@
     </div>
     <div class="column-3 col-color-grey">
         <b>
-
             <p class="big">Lastname</p>
         </b>
     </div>
@@ -126,10 +126,10 @@
 </div>
 <div class="row">
     <div class="column-3">
-        <p class="small">issue_branch!</p>
+        <p class="small" th:text="${issue_branch}"></p>
     </div>
     <div class="column-3">
-        <p class="small">issue_date!</p>
+        <p class="small" th:text="${issue_date}"></p>
     </div>
     <div class="column-3">
         <p class="small">&nbsp</p>
@@ -154,16 +154,15 @@
 </div>
 <div class="row">
     <div class="column-3">
-        <p class="small">email!</p>
+        <p class="small" th:text="${email}"></p>
     </div>
     <div class="column-3">
-        <p class="small">marital_status!!</p>
+        <p class="small" th:text="${marital_status}"></p>
     </div>
     <div class="column-3">
-        <p class="small">dependent_amount!</p>
+        <p class="small" th:text="${dependent_amount}"></p>
     </div>
 </div>
-
 <h3 style="margin-top: 300px">Employment:</h3>
 <div class="row">
     <div class="column-3 col-color-grey">
@@ -184,13 +183,13 @@
 </div>
 <div class="row">
     <div class="column-3">
-        <p class="small">employment_status!</p>
+        <p class="small" th:text="${employment_status}"></p>
     </div>
     <div class="column-3">
-        <p class="small">employer_inn!</p>
+        <p class="small" th:text="${employer_inn}"></p>
     </div>
     <div class="column-3">
-        <p class="small">position!</p>
+        <p class="small" th:text="${position}"></p>
     </div>
 </div>
 <div class="row">
@@ -212,16 +211,121 @@
 </div>
 <div class="row">
     <div class="column-3">
-        <p class="small">salary!</p>
+        <p class="small" th:text="${salary}"></p>
     </div>
     <div class="column-3">
-        <p class="small">work_experience_total!</p>
+        <p class="small" th:text="${work_experience_total}"></p>
     </div>
     <div class="column-3">
-        <p class="small">work_experience_current!</p>
+        <p class="small" th:text="${work_experience_current}"></p>
     </div>
 </div>
+<h3 style="margin-top: 180px">Credit terms:</h3>
+<div class="row">
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Requested amount</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
 
+            <p class="big">Term</p>
+        </b>
+    </div>
+    <div class="column-3 col-color-grey">
+        <b>
+            <p class="big">Rate</p>
+        </b>
+    </div>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small" th:text="${amount}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${term}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${rate}"></p>
+    </div>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+        <p class="big">Total amount</p>
+    </b>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+
+        <p class="big">Monthly payment</p>
+    </b>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+        <p class="big">&nbsp</p>
+    </b>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small" th:text="${psk}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${monthly_payment}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small">&nbsp</p>
+    </div>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+        <p class="big">Insurance</p>
+    </b>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+        <p class="big">Salary client</p>
+    </b>
+</div>
+<div class="column-3 col-color-grey">
+    <b>
+        <p class="big">&nbsp</p>
+    </b>
+</div>
+<div class="row">
+    <div class="column-3">
+        <p class="small" th:text="${insurance_enable}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small" th:text="${salary_client}"></p>
+    </div>
+    <div class="column-3">
+        <p class="small">&nbsp</p>
+    </div>
+</div>
+<h3 style="margin-top: 280px">Payment Schedule:</h3>
+<table style="width: 100%; text-align: center">
+    <thead>
+    <tr class="col-color-grey">
+        <th>№</th>
+        <th>Date</th>
+        <th>Total payment</th>
+        <th>Debt payment</th>
+        <th>Interest payment</th>
+        <th>Remaining debt</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment: ${payments}">
+        <td><span th:text="${payment.getNumber()}"></span></td>
+        <td><span th:text="${payment.getDate()}"></span></td>
+        <td><span th:text="${payment.getTotalPayment()}"></span></td>
+        <td><span th:text="${payment.getDebtPayment()}"></span></td>
+        <td><span th:text="${payment.getInterestPayment()}"></span></td>
+        <td><span th:text="${payment.getRemainingDebt()}"></span></td>
+    </tr>
+    </tbody>
+</table>
 <div class="row" style="margin-top: 300px; text-align: center">
     <div class="column-3">
         <b>
@@ -244,7 +348,7 @@
         <p class="small">&nbsp</p>
     </div>
     <div class="column-3">
-        <p class="small">date!</p>
+        <p class="small" th:text="${date}"></p>
     </div>
     <div class="column-3">
         <p class="small">___________</p>

@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset admin:26
+--changeset admin:27
 CREATE SCHEMA IF NOT EXISTS credit_app;
 CREATE TABLE IF NOT EXISTS credit_app.credit
 (
@@ -59,6 +59,6 @@ CREATE TABLE IF NOT EXISTS credit_app.application
     creation_date  timestamp(6) WITH TIME ZONE DEFAULT now(),
     applied_offer  jsonb,
     sign_date      timestamp(6) WITH TIME ZONE,
-    ses_code       varchar(64) NOT NULL,
+    ses_code       varchar(64),
     status_history jsonb       NOT NULL
 );

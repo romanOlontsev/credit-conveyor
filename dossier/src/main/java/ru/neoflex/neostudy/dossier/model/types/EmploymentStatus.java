@@ -1,8 +1,15 @@
 package ru.neoflex.neostudy.dossier.model.types;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
 public enum EmploymentStatus {
-    UNEMPLOYED,
-    SELF_EMPLOYED,
-    EMPLOYED,
-    BUSINESS_OWNER,
+    UNEMPLOYED("Unemployed"),
+    SELF_EMPLOYED("Self employed"),
+    EMPLOYED("Employed"),
+    BUSINESS_OWNER("Business owner");
+
+    private final String text;
 }

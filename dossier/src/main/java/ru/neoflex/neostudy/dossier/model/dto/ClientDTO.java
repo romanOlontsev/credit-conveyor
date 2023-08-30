@@ -1,6 +1,8 @@
 package ru.neoflex.neostudy.dossier.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.*;
 import ru.neoflex.neostudy.dossier.model.types.Gender;
 import ru.neoflex.neostudy.dossier.model.types.MaritalStatus;
@@ -20,6 +22,7 @@ public class ClientDTO {
     private String lastName;
     @JsonProperty(value = "middle_name")
     private String middleName;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonProperty(value = "birth_date")
     private LocalDate birthDate;
     @JsonProperty(value = "email")

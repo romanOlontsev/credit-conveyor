@@ -10,5 +10,5 @@ public interface DealClient {
 
     @PutMapping(value = "/application/{applicationId}/status",
             produces = "application/json")
-    ApplicationDTO updateApplicationStatus(@PathVariable("applicationId") String applicationId);
+    ApplicationDTO updateApplicationStatus(@PathVariable("applicationId") Long applicationId);
 }

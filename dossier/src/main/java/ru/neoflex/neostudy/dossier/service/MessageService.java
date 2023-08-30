@@ -1,6 +1,5 @@
 package ru.neoflex.neostudy.dossier.service;
 
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +34,10 @@ public class MessageService {
         attribute.setMessage("You have chosen one of the conditions offered by us. Please fill out the form to " +
                 "calculate the total cost of the loan. Link to the form below.");
         attribute.setButtonName("Fill in the form");
-        attribute.setUrl(baseUrl + "/application/registration/" + emailMessage.getApplicationId());
-        sendEmail(emailMessage, attribute, subject);
+        String url = String.format(baseUrl + "/application/registration/%d", emailMessage.getApplicationId());
+        attribute.setUrl(url);
+        emailService.sendEmail(emailMessage.getAddress(), subject, attribute, null);
+        log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
 
     @KafkaListener(topics = "create-documents")
@@ -48,20 +49,27 @@ public class MessageService {
                 "the link below. In response, you will receive an email with completed " +
                 "documents.");
         attribute.setButtonName("Prepare documents");
-        attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId());
-        sendEmail(emailMessage, attribute, subject);
+        String url = String.format(baseUrl + "/document/%d", emailMessage.getApplicationId());
+        attribute.setUrl(url);
+        emailService.sendEmail(emailMessage.getAddress(), subject, attribute, null);
+        log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
 
     @KafkaListener(topics = "send-documents")
     public void listenSendDocumentsTopic(EmailMessage emailMessage) {
+        generatePdfDocs(emailMessage);
         ThymeleafAttribute attribute = new ThymeleafAttribute();
         String subject = "Your documents for issuing a loan";
         attribute.setTitle("Documents received");
         attribute.setMessage("Please check their correctness and follow the link to get a simple electronic " +
                 "signature.");
         attribute.setButtonName("Get SES code");
-        attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId() + "/sign");
-        sendEmail(emailMessage, attribute, subject);
+        Long applicationId = emailMessage.getApplicationId();
+        String url = String.format(baseUrl + "/document/%d/sign", applicationId);
+        attribute.setUrl(url);
+        String attachment = String.format("dossier/src/main/resources/document/credit-terms-%d.pdf", applicationId);
+        emailService.sendEmail(emailMessage.getAddress(), subject, attribute, attachment);
+        log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
 
     @KafkaListener(topics = "send-ses")
@@ -71,9 +79,11 @@ public class MessageService {
         attribute.setTitle("Your documents and SES code are ready");
         attribute.setMessage("Please sign documents with ses code. As soon as your application is accepted, " +
                 "you will be sent an email confirming the issuance of the loan.");
-        attribute.setButtonName("Sign documents ");
-        attribute.setUrl(baseUrl + "/document/" + emailMessage.getApplicationId() + "/sign/code");
-        sendEmail(emailMessage, attribute, subject);
+        attribute.setButtonName("Sign documents");
+        String url = String.format(baseUrl + "/document/%d/sign/code", emailMessage.getApplicationId());
+        attribute.setUrl(url);
+        emailService.sendEmail(emailMessage.getAddress(), subject, attribute, null);
+        log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
 
     @KafkaListener(topics = "credit-issued")
@@ -84,24 +94,23 @@ public class MessageService {
         attribute.setMessage("Your loan has been successfully approved. The money will be credited to the " +
                 "specified account within 24 hours.");
         attribute.setHiddenButton(true);
-        sendEmail(emailMessage, attribute, subject);
+        emailService.sendEmail(emailMessage.getAddress(), subject, attribute, null);
+        log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
 
     @KafkaListener(topics = "application-denied")
-    public void listenApplicationDeniedTopic(EmailMessage emailMessage) throws IOException {
-        ApplicationDTO applicationDTO = dealClient.updateApplicationStatus(String.valueOf(emailMessage.getApplicationId()));
-        pdfConverter.execute("personal-data", applicationDTO);
-        log.info("ok");
+    public void listenApplicationDeniedTopic(EmailMessage emailMessage) {
     }
 
-    private void sendEmail(EmailMessage emailMessage, ThymeleafAttribute attribute, String subject) {
+
+    private void generatePdfDocs(EmailMessage emailMessage) {
+        ApplicationDTO applicationDTO = dealClient.updateApplicationStatus(emailMessage.getApplicationId());
         try {
-            emailService.sendEmail(emailMessage.getAddress(), subject, attribute);
-            log.info("Message received: {}", emailMessage);
-        } catch (MessagingException e) {
-            String message = "Email: " + emailMessage + " was not sent";
-            log.error(message, e);
-            throw new EmailMessageException(message);
+            pdfConverter.execute("credit-terms", applicationDTO, emailMessage.getApplicationId());
+            log.info("Pdf created for applicationId={}", emailMessage.getApplicationId());
+        } catch (IOException e) {
+            throw new EmailMessageException("Error generating pdf documents for applicationId=" +
+                    emailMessage.getApplicationId());
         }
     }
 }

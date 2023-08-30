@@ -3,19 +3,20 @@ package ru.neoflex.neostudy.deal.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.neoflex.neostudy.deal.exception.DataNotFoundException;
 import ru.neoflex.neostudy.deal.mapper.ApplicationMapper;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
+import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.deal.model.entity.Application;
 import ru.neoflex.neostudy.deal.model.entity.Client;
 import ru.neoflex.neostudy.deal.model.jsonb.StatusHistory;
-import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
-import ru.neoflex.neostudy.deal.model.types.ChangeType;
-import ru.neoflex.neostudy.deal.exception.DataNotFoundException;
-import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.deal.model.types.ApplicationStatus;
+import ru.neoflex.neostudy.deal.model.types.ChangeType;
 import ru.neoflex.neostudy.deal.repository.ApplicationRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -40,7 +41,7 @@ public class ApplicationService {
     public Application findApplicationById(Long applicationId) {
         return applicationRepository.findById(applicationId)
                                     .orElseThrow(() -> new DataNotFoundException("Application with id=" +
-                                                                                         applicationId + " not found"));
+                                            applicationId + " not found"));
     }
 
     public void changeStatus(Application application, ApplicationStatus status) {
@@ -62,5 +63,12 @@ public class ApplicationService {
 
     public ApplicationDTO getApplicationInfoFromApplication(Application application) {
         return applicationMapper.applicationToApplicationInfo(application);
+    }
+
+
+    public void generateSesCode(Application application) {
+        String sesCode = UUID.randomUUID()
+                            .toString();
+        application.setSesCode(sesCode);
     }
 }

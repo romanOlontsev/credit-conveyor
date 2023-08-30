@@ -133,7 +133,7 @@ class DealServiceTest {
         doNothing().when(kafkaService)
                    .sendEmailMessage(any(), any());
 
-        service.finishRegistration("-1", offer);
+        service.finishRegistration(-1L, offer);
         assertAll(
                 () -> verify(applicationService, times(1)).findApplicationById(any()),
                 () -> verify(applicationService, times(1)).changeStatus(any(), any()),

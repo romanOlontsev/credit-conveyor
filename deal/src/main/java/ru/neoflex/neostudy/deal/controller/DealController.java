@@ -96,7 +96,7 @@ public interface DealController {
     void finishRegistration(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
-            @PathVariable String applicationId,
+            @PathVariable Long applicationId,
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
             @RequestBody FinishRegistrationRequestDTO request);
@@ -117,7 +117,7 @@ public interface DealController {
     void sendDocuments(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
-            @PathVariable String applicationId);
+            @PathVariable Long applicationId);
 
     @Operation(summary = "Sign documents")
     @ApiResponses(value = {
@@ -135,7 +135,7 @@ public interface DealController {
     void signDocuments(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
-            @PathVariable String applicationId);
+            @PathVariable Long applicationId);
 
     @Operation(summary = "Verify Ses code")
     @ApiResponses(value = {
@@ -153,7 +153,7 @@ public interface DealController {
     void verifySesCode(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
-            @PathVariable String applicationId);
+            @PathVariable Long applicationId);
 
     @Operation(summary = "Update application status")
     @ApiResponses(value = {
@@ -176,7 +176,7 @@ public interface DealController {
     ApplicationDTO updateApplicationStatus(
             @Parameter(in = ParameterIn.PATH,
                     required = true)
-            @PathVariable String applicationId);
+            @PathVariable Long applicationId);
 
 
     @GetMapping(value = "/test/{id}")

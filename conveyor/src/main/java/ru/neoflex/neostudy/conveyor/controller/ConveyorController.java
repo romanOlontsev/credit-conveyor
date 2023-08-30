@@ -74,7 +74,6 @@ public interface ConveyorController {
     CreditDTO calculateCredit(
             @Parameter(in = ParameterIn.DEFAULT,
                     required = true)
-            @Valid
-            @RequestBody ScoringDataDTO scoringRequest
+            @RequestBody @Valid ScoringDataDTO scoringRequest
     );
 }
