@@ -18,6 +18,7 @@
         <spring-kafka.version>3.0.10</spring-kafka.version>
         <jackson-dataformat-xml.version>2.15.2</jackson-dataformat-xml.version>
         <jsoup.version>1.16.1</jsoup.version>
+        <openhtmltopdf-pdfbox.version>1.0.10</openhtmltopdf-pdfbox.version>
     </properties>
     <dependencies>
         <dependency>
@@ -57,12 +58,12 @@
         <dependency>
             <groupId>com.openhtmltopdf</groupId>
             <artifactId>openhtmltopdf-core</artifactId>
-            <version>1.0.10</version>
+            <version>${openhtmltopdf-pdfbox.version}</version>
         </dependency>
         <dependency>
             <groupId>com.openhtmltopdf</groupId>
             <artifactId>openhtmltopdf-pdfbox</artifactId>
-            <version>1.0.10</version>
+            <version>${openhtmltopdf-pdfbox.version}</version>
         </dependency>
     </dependencies>
 
