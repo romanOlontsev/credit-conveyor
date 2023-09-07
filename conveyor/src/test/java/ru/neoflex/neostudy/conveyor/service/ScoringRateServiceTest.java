@@ -30,7 +30,7 @@ class ScoringRateServiceTest {
     @BeforeEach
     void setUp() {
         EmploymentDTO employment = EmploymentDTO.builder()
-                                                .employmentStatus(EmploymentStatus.BUSINESS_OWNER)
+                                                .status(EmploymentStatus.BUSINESS_OWNER)
                                                 .employerInn("1234")
                                                 .salary(BigDecimal.valueOf(50000))
                                                 .position(Position.MIDDLE_MANAGER)
@@ -125,7 +125,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldReturnRate_employmentStatus_selfEmployed() {
         scoringDataDTO.getEmployment()
-                      .setEmploymentStatus(EmploymentStatus.SELF_EMPLOYED);
+                      .setStatus(EmploymentStatus.SELF_EMPLOYED);
         ScoringDataDTO selfEmployedStatus = scoringDataDTO;
 
         BigDecimal scoringRate = service.calculateScoringRate(selfEmployedStatus);
@@ -137,7 +137,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldThrowValidatedExceptionByEmploymentStatus() {
         scoringDataDTO.getEmployment()
-                      .setEmploymentStatus(EmploymentStatus.UNEMPLOYED);
+                      .setStatus(EmploymentStatus.UNEMPLOYED);
         ScoringDataDTO unemployedStatus = scoringDataDTO;
 
         String exceptionMessage = "Credit denial: employment status - unemployed";
@@ -151,7 +151,7 @@ class ScoringRateServiceTest {
     @Test
     void calculateScoringRate_shouldThrowBadRequestExceptionByEmploymentStatus() {
         scoringDataDTO.getEmployment()
-                      .setEmploymentStatus(EmploymentStatus.NONE);
+                      .setStatus(EmploymentStatus.NONE);
         ScoringDataDTO unknownStatus = scoringDataDTO;
 
         String exceptionMessage = "Unknown employment status";

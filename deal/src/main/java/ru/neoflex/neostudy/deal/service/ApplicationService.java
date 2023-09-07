@@ -3,22 +3,26 @@ package ru.neoflex.neostudy.deal.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.neoflex.neostudy.deal.exception.DataNotFoundException;
+import ru.neoflex.neostudy.deal.mapper.ApplicationMapper;
+import ru.neoflex.neostudy.deal.model.dto.ApplicationDTO;
+import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.deal.model.entity.Application;
 import ru.neoflex.neostudy.deal.model.entity.Client;
 import ru.neoflex.neostudy.deal.model.jsonb.StatusHistory;
-import ru.neoflex.neostudy.deal.model.types.ChangeType;
-import ru.neoflex.neostudy.deal.exception.DataNotFoundException;
-import ru.neoflex.neostudy.deal.model.dto.LoanApplicationRequestDTO;
 import ru.neoflex.neostudy.deal.model.types.ApplicationStatus;
+import ru.neoflex.neostudy.deal.model.types.ChangeType;
 import ru.neoflex.neostudy.deal.repository.ApplicationRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ApplicationService {
+    private final ApplicationMapper applicationMapper;
     private final ApplicationRepository applicationRepository;
     private final ClientService clientService;
 
@@ -30,14 +34,19 @@ public class ApplicationService {
                                              .clientId(client)
                                              .build();
         changeStatus(application, status);
-        log.info("Client saved: {}", client);
-        return applicationRepository.save(application);
+        Application savedApplication = applicationRepository.save(application);
+        log.info("Application saved: {}", savedApplication);
+        return savedApplication;
     }
 
     public Application findApplicationById(Long applicationId) {
         return applicationRepository.findById(applicationId)
                                     .orElseThrow(() -> new DataNotFoundException("Application with id=" +
-                                                                                         applicationId + " not found"));
+                                            applicationId + " not found"));
+    }
+
+    public List<Application> findAllApplications() {
+        return applicationRepository.findAll();
     }
 
     public void changeStatus(Application application, ApplicationStatus status) {
@@ -55,5 +64,21 @@ public class ApplicationService {
             application.getStatusHistory()
                        .add(statusHistory);
         }
+        log.info("Application status with applicationId={} changed to {}", application.getApplicationId(), status);
+    }
+
+    public ApplicationDTO getApplicationDTOFromApplication(Application application) {
+        return applicationMapper.applicationToApplicationDTO(application);
+    }
+
+    public List<ApplicationDTO> getApplicationDTOListFromApplicationList(List<Application> applicationList) {
+        return applicationMapper.applicationListToApplicationDTOList(applicationList);
+    }
+
+    public void generateSesCode(Application application) {
+        String sesCode = UUID.randomUUID()
+                             .toString();
+        application.setSesCode(sesCode);
+        log.info("Ses code generated for applicationId={}", application.getApplicationId());
     }
 }

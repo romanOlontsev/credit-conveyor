@@ -14,6 +14,7 @@
         <module>conveyor</module>
         <module>deal</module>
         <module>application</module>
+        <module>dossier</module>
     </modules>
 
     <properties>

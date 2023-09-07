@@ -654,7 +654,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldReturnCreditDTO() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -699,7 +699,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_amountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -747,7 +747,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_amountIsLessThan10000() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -796,7 +796,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_termIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -843,7 +843,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_termIsLessThan6() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -891,7 +891,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_firstNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -938,7 +938,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_firstNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -986,7 +986,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_lastNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1033,7 +1033,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_lastNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1081,7 +1081,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1129,7 +1129,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1178,7 +1178,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_genderIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1225,7 +1225,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_birthdateIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1271,7 +1271,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_userUnder18() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1319,7 +1319,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportSeriesIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1366,7 +1366,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportSeriesDoesNotContainFourNumbers() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1414,7 +1414,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportNumberIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1461,7 +1461,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportNumberDoesNotContainSixNumbers() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1509,7 +1509,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportIssueDateIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1555,7 +1555,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_passportIssueBranchIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1602,7 +1602,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_maritalStatusIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1649,7 +1649,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_dependentAmountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1735,7 +1735,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_accountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1782,7 +1782,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_isInsuranceEnabledIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)
@@ -1829,7 +1829,7 @@ class ConveyorControllerImplTest {
     @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_isSalaryClientIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .employmentStatus(EmploymentStatus.SELF_EMPLOYED)
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
                                                    .employerInn("1234457")
                                                    .salary(BigDecimal.valueOf(500000))
                                                    .position(Position.MIDDLE_MANAGER)

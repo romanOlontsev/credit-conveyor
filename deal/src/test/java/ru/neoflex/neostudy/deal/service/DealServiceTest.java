@@ -31,6 +31,8 @@ class DealServiceTest {
     private CreditService creditService;
     @Mock
     private ClientService clientService;
+    @Mock
+    private KafkaService kafkaService;
 
     @Test
     void getOffers_shouldReturnExpectedList() {
@@ -56,13 +58,16 @@ class DealServiceTest {
                                                  .isEqualTo(application.getApplicationId()),
                 () -> assertThat(response.get(1)).extracting(LoanOfferDTO::getApplicationId)
                                                  .isEqualTo(application.getApplicationId())
-        );
+                 );
     }
 
     @Test
     void selectOffer_shouldUpdateApplication() {
         Application application = Application.builder()
                                              .sesCode("test")
+                                             .clientId(Client.builder()
+                                                             .email("dog@cat.com")
+                                                             .build())
                                              .build();
         Credit credit = Credit.builder()
                               .term(-200)
@@ -75,6 +80,8 @@ class DealServiceTest {
         doNothing().when(applicationService)
                    .changeStatus(any(), any());
         when(creditService.getCreditFromLoanOfferDTO(any())).thenReturn(credit);
+        doNothing().when(kafkaService)
+                   .sendEmailMessage(any(), any());
 
         service.selectOffer(offer);
         assertAll(
@@ -84,14 +91,16 @@ class DealServiceTest {
                                              .isEqualTo(offer),
                 () -> verify(applicationService, times(1)).findApplicationById(any()),
                 () -> verify(applicationService, times(1)).changeStatus(any(), any()),
-                () -> verify(creditService, times(1)).getCreditFromLoanOfferDTO(any())
-        );
+                () -> verify(creditService, times(1)).getCreditFromLoanOfferDTO(any()),
+                () -> verify(kafkaService, times(1)).sendEmailMessage(any(), any())
+                 );
     }
 
     @Test
     void finishRegistration_shouldUpdateApplicationClientCredit() {
         Client client = Client.builder()
                               .clientId(-3L)
+                              .email("dog@cat.com")
                               .build();
         Credit credit = Credit.builder()
                               .creditId(-2L)
@@ -121,9 +130,10 @@ class DealServiceTest {
         when(creditConveyorClient.calculateCredit(any())).thenReturn(finalCredit);
         doNothing().when(creditService)
                    .updateCreditFromCreditDto(any(), any());
+        doNothing().when(kafkaService)
+                   .sendEmailMessage(any(), any());
 
-
-        service.finishRegistration("-1", offer);
+        service.finishRegistration(-1L, offer);
         assertAll(
                 () -> verify(applicationService, times(1)).findApplicationById(any()),
                 () -> verify(applicationService, times(1)).changeStatus(any(), any()),
@@ -132,7 +142,8 @@ class DealServiceTest {
                 () -> verify(clientService, times(1))
                         .getScoringDataDTOFromClient(any()),
                 () -> verify(creditService, times(1)).updateScoringDataDTOFromCredit(any(), any()),
-                () -> verify(creditService, times(1)).updateCreditFromCreditDto(any(), any())
-        );
+                () -> verify(creditService, times(1)).updateCreditFromCreditDto(any(), any()),
+                () -> verify(kafkaService, times(1)).sendEmailMessage(any(), any())
+                 );
     }
 }

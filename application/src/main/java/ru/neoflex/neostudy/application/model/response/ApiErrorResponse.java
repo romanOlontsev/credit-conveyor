@@ -20,11 +20,10 @@ public class ApiErrorResponse {
     private String exceptionMessage;
     private List<String> stacktrace;
 
-    public ApiErrorResponse addStacktraceItem(String stacktraceItem) {
+    public void addStacktraceItem(String stacktraceItem) {
         if (this.stacktrace == null) {
             this.stacktrace = new ArrayList<>();
         }
         this.stacktrace.add(stacktraceItem);
-        return this;
     }
 }

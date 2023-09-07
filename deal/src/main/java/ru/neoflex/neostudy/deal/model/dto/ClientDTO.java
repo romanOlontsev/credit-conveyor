@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ClientDto {
+public class ClientDTO {
     @JsonProperty(value = "first_name")
     private String firstName;
     @JsonProperty(value = "last_name")
@@ -33,9 +33,9 @@ public class ClientDto {
     @JsonProperty(value = "dependent_amount")
     private Integer dependentAmount;
     @JsonProperty(value = "passport")
-    private Passport passport;
+    private PassportDTO passport;
     @JsonProperty(value = "employment")
-    private Employment employment;
+    private EmploymentDTO employment;
     @JsonProperty(value = "account")
     private String account;
 }

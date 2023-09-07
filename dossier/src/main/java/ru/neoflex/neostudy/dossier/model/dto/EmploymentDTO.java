@@ -1,9 +1,9 @@
-package ru.neoflex.neostudy.deal.model.dto;
+package ru.neoflex.neostudy.dossier.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import ru.neoflex.neostudy.deal.model.types.EmploymentStatus;
-import ru.neoflex.neostudy.deal.model.types.Position;
+import ru.neoflex.neostudy.dossier.model.types.EmploymentStatus;
+import ru.neoflex.neostudy.dossier.model.types.Position;
 
 import java.math.BigDecimal;
 
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class EmploymentDto {
+public class EmploymentDTO {
     @JsonProperty(value = "status")
     private EmploymentStatus status;
     @JsonProperty(value = "employer_inn")

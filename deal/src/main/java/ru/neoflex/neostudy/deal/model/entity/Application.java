@@ -11,7 +11,6 @@ import ru.neoflex.neostudy.deal.model.types.ApplicationStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @DynamicInsert
@@ -56,11 +55,4 @@ public class Application {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "status_history")
     private List<StatusHistory> statusHistory;
-
-    @PrePersist
-    private void generateSesCode() {
-        setSesCode(UUID.randomUUID()
-                       .toString());
-
-    }
 }

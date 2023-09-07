@@ -1,6 +1,6 @@
 --liquibase formatted sql
 
---changeset admin:24
+--changeset admin:27
 INSERT INTO credit_app.credit (amount, term, monthly_payment, rate, psk, payment_schedule, insurance_enable,
                                salary_client, credit_status)
 VALUES (10000.00, 12, 921.57, 19.00, 11058.84,

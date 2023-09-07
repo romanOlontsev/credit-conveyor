@@ -2,7 +2,7 @@ package ru.neoflex.neostudy.deal.service;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import ru.neoflex.neostudy.deal.model.dto.EmploymentDto;
+import ru.neoflex.neostudy.deal.model.dto.EmploymentDTO;
 import ru.neoflex.neostudy.deal.model.entity.Client;
 import ru.neoflex.neostudy.deal.model.entity.Employment;
 import ru.neoflex.neostudy.deal.model.entity.Passport;
@@ -68,7 +68,7 @@ class ClientServiceTest {
 
     @Test
     void updateClientFromFinishRegistrationRequestDTO_shouldUpdateClient() {
-        EmploymentDto employmentDto = EmploymentDto.builder()
+        EmploymentDTO employmentDto = EmploymentDTO.builder()
                                                    .status(EmploymentStatus.EMPLOYED)
                                                    .employerInn("1234")
                                                    .salary(BigDecimal.ONE)
