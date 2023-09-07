@@ -4,7 +4,6 @@ import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.neoflex.neostudy.conveyor.config.AppConfig;
-import ru.neoflex.neostudy.conveyor.exception.BadRequestException;
 import ru.neoflex.neostudy.conveyor.model.dto.ScoringDataDTO;
 import ru.neoflex.neostudy.conveyor.model.types.EmploymentStatus;
 import ru.neoflex.neostudy.conveyor.model.types.Gender;
@@ -90,7 +89,9 @@ public class ScoringRateService {
                                                                         .businessOwnerIncrease());
                 return zero.add(businessOwnerRate);
             }
-            default -> throw new BadRequestException("Unknown employment status");
+            default -> {
+                return zero;
+            }
         }
     }
 
@@ -109,7 +110,9 @@ public class ScoringRateService {
                                                                      .topManagerReduction());
                 return zero.subtract(topManagerRate);
             }
-            default -> throw new BadRequestException("Unknown employee position");
+            default -> {
+                return zero;
+            }
         }
     }
 
@@ -127,7 +130,9 @@ public class ScoringRateService {
                                                                    .divorcedIncrease());
                 return zero.add(divorcedRate);
             }
-            default -> throw new BadRequestException("Unknown marital status");
+            default -> {
+                return zero;
+            }
         }
     }
 
@@ -172,7 +177,9 @@ public class ScoringRateService {
                                                                     .nonBinaryAgeIncrease());
                 return zero.add(nonBinaryRate);
             }
-            default -> throw new BadRequestException("Unknown gender");
+            default -> {
+                return zero;
+            }
         }
     }
 }
