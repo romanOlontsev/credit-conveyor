@@ -55,11 +55,4 @@ public class Application {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "status_history")
     private List<StatusHistory> statusHistory;
-
-//    @PrePersist
-//    private void generateSesCode() {
-//        setSesCode(UUID.randomUUID()
-//                       .toString());
-//
-//    }
 }

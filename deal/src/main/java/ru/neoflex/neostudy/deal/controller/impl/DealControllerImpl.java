@@ -47,12 +47,17 @@ public class DealControllerImpl implements DealController {
     }
 
     @Override
-    public ApplicationDTO updateApplicationStatus(Long applicationId) {
-        return service.updateApplicationStatus(applicationId);
+    public void updateApplicationStatus(Long applicationId) {
+        service.updateApplicationStatus(applicationId);
     }
 
     @Override
-    public void test(Long id) {
-        service.test(id);
+    public ApplicationDTO getApplicationById(Long id) {
+        return service.getApplicationById(id);
+    }
+
+    @Override
+    public List<ApplicationDTO> getAllApplications() {
+        return service.getAllApplications();
     }
 }

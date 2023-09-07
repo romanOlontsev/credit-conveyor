@@ -104,7 +104,8 @@ public class MessageService {
 
 
     private void generatePdfDocs(EmailMessage emailMessage) {
-        ApplicationDTO applicationDTO = dealClient.updateApplicationStatus(emailMessage.getApplicationId());
+        dealClient.updateApplicationStatus(emailMessage.getApplicationId());
+        ApplicationDTO applicationDTO = dealClient.getApplicationById(emailMessage.getApplicationId());
         try {
             pdfConverter.execute("credit-terms", applicationDTO, emailMessage.getApplicationId());
             log.info("Pdf created for applicationId={}", emailMessage.getApplicationId());

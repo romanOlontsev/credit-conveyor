@@ -29,7 +29,6 @@ public class DealService {
     @Transactional
     public List<LoanOfferDTO> getOffers(LoanApplicationRequestDTO request) {
         Application createdApplication = applicationService.createApplication(request);
-        log.info("Application saved: {}", createdApplication);
 
         List<LoanOfferDTO> loanOfferDTOS = creditConveyorClient.calculateOffers(request);
         loanOfferDTOS.forEach(it -> it.setApplicationId(createdApplication.getApplicationId()));
@@ -44,8 +43,6 @@ public class DealService {
         Application foundApplication = applicationService.findApplicationById(request.getApplicationId());
         ApplicationStatus status = ApplicationStatus.APPROVED;
         applicationService.changeStatus(foundApplication, status);
-        log.info("Application status with applicationId={} changed to {}", foundApplication.getApplicationId(),
-                foundApplication.getStatus());
 
         Credit credit = creditService.getCreditFromLoanOfferDTO(request);
         foundApplication.setAppliedOffer(request);
@@ -61,7 +58,6 @@ public class DealService {
                                            .theme(finishRegistrationTheme)
                                            .build();
         kafkaService.sendEmailMessage(finishRegistrationTheme, message);
-        log.info("Email sent to topic: {}", finishRegistrationTheme.getTopicName());
     }
 
     @Transactional
@@ -71,7 +67,6 @@ public class DealService {
         Application foundApplication = applicationService.findApplicationById(applicationId);
         ApplicationStatus status = ApplicationStatus.CC_APPROVED;
         applicationService.changeStatus(foundApplication, status);
-        log.info("Application status with applicationId={} changed to {}", applicationId, foundApplication.getStatus());
 
         Client client = foundApplication.getClientId();
         clientService.updateClientFromFinishRegistrationRequestDTO(client, request);
@@ -91,27 +86,22 @@ public class DealService {
                                            .theme(createDocumentTheme)
                                            .build();
         kafkaService.sendEmailMessage(createDocumentTheme, message);
-        log.info("Email sent to topic: {}", createDocumentTheme.getTopicName());
     }
 
     @Transactional
     public void sendDocuments(Long applicationId) {
         Application foundApplication = applicationService.findApplicationById(applicationId);
         applicationService.changeStatus(foundApplication, ApplicationStatus.PREPARE_DOCUMENTS);
-        log.info("Application status with applicationId={} changed to {}", applicationId, foundApplication.getStatus());
         Theme sendDocumentsTheme = Theme.SEND_DOCUMENTS;
         sendEmailMessage(applicationId, sendDocumentsTheme);
-        log.info("Email sent to topic: {}", sendDocumentsTheme.getTopicName());
     }
 
     @Transactional
     public void signDocuments(Long applicationId) {
         Application foundApplication = applicationService.findApplicationById(applicationId);
         applicationService.generateSesCode(foundApplication);
-        log.info("Ses code generated for applicationId={}", applicationId);
         Theme signDocumentsTheme = Theme.SEND_SES;
         sendEmailMessage(applicationId, signDocumentsTheme);
-        log.info("Email sent to topic: {}", signDocumentsTheme.getTopicName());
     }
 
     @Transactional
@@ -120,19 +110,25 @@ public class DealService {
         Application foundApplication = applicationService.findApplicationById(applicationId);
         foundApplication.setSignDate(LocalDateTime.now());
         applicationService.changeStatus(foundApplication, ApplicationStatus.DOCUMENT_SIGNED);
-        log.info("Application status with applicationId={} changed to {}", applicationId, foundApplication.getStatus());
         applicationService.changeStatus(foundApplication, ApplicationStatus.CREDIT_ISSUED);
-        log.info("Application status with applicationId={} changed to {}", applicationId, foundApplication.getStatus());
         sendEmailMessage(applicationId, creditIssuedTheme);
-        log.info("Email sent to topic: {}", creditIssuedTheme.getTopicName());
     }
 
     @Transactional
-    public ApplicationDTO updateApplicationStatus(Long applicationId) {
+    public void updateApplicationStatus(Long applicationId) {
         Application foundApplication = applicationService.findApplicationById(applicationId);
         applicationService.changeStatus(foundApplication, ApplicationStatus.DOCUMENT_CREATED);
-        log.info("Application changed: {}, ", foundApplication);
-        return applicationService.getApplicationInfoFromApplication(foundApplication);
+    }
+
+    public ApplicationDTO getApplicationById(Long id) {
+        Application foundApplication = applicationService.findApplicationById(id);
+        return applicationService.getApplicationDTOFromApplication(foundApplication);
+    }
+
+    public List<ApplicationDTO> getAllApplications() {
+        List<Application> allApplications = applicationService.findAllApplications();
+        return applicationService.getApplicationDTOListFromApplicationList(allApplications);
+
     }
 
     private void sendEmailMessage(Long applicationId, Theme theme) {
@@ -146,11 +142,5 @@ public class DealService {
                                            .theme(theme)
                                            .build();
         kafkaService.sendEmailMessage(theme, message);
-    }
-
-    public void test(Long id) {
-        kafkaService.sendEmailMessage(Theme.APPLICATION_DENIED, EmailMessage.builder()
-                                                                            .applicationId(id)
-                                                                            .build());
     }
 }

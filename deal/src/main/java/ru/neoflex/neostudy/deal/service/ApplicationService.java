@@ -34,14 +34,19 @@ public class ApplicationService {
                                              .clientId(client)
                                              .build();
         changeStatus(application, status);
-        log.info("Client saved: {}", client);
-        return applicationRepository.save(application);
+        Application savedApplication = applicationRepository.save(application);
+        log.info("Application saved: {}", savedApplication);
+        return savedApplication;
     }
 
     public Application findApplicationById(Long applicationId) {
         return applicationRepository.findById(applicationId)
                                     .orElseThrow(() -> new DataNotFoundException("Application with id=" +
                                             applicationId + " not found"));
+    }
+
+    public List<Application> findAllApplications() {
+        return applicationRepository.findAll();
     }
 
     public void changeStatus(Application application, ApplicationStatus status) {
@@ -59,16 +64,21 @@ public class ApplicationService {
             application.getStatusHistory()
                        .add(statusHistory);
         }
+        log.info("Application status with applicationId={} changed to {}", application.getApplicationId(), status);
     }
 
-    public ApplicationDTO getApplicationInfoFromApplication(Application application) {
-        return applicationMapper.applicationToApplicationInfo(application);
+    public ApplicationDTO getApplicationDTOFromApplication(Application application) {
+        return applicationMapper.applicationToApplicationDTO(application);
     }
 
+    public List<ApplicationDTO> getApplicationDTOListFromApplicationList(List<Application> applicationList) {
+        return applicationMapper.applicationListToApplicationDTOList(applicationList);
+    }
 
     public void generateSesCode(Application application) {
         String sesCode = UUID.randomUUID()
-                            .toString();
+                             .toString();
         application.setSesCode(sesCode);
+        log.info("Ses code generated for applicationId={}", application.getApplicationId());
     }
 }

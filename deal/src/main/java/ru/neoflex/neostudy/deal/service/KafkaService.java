@@ -23,7 +23,7 @@ public class KafkaService {
         future.whenComplete((result, exception) -> {
             if (exception == null) {
                 log.info("{} topic message sent: {} with offset={}", topicName, message, result.getRecordMetadata()
-                                                                                          .offset());
+                                                                                               .offset());
             } else {
                 log.error("Unable to send message: {} on a {} topic", message, topicName);
             }
