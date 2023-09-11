@@ -1,6 +1,6 @@
-## Gateway MS
+## Application MS
 
-Gateway MS is an interface for interacting with the credit-conveyor project.
+Application MS performs prescoring of input credit data from Gateways MS.
 
 ### Requirements
 
@@ -13,12 +13,10 @@ The application can be run locally, the requirements for setup are listed below.
 
 #### Properties
 
-1. Application will run by default on port `8079`
+1. Application will run by default on port `8080`
 Configure the port by changing `server.port` in `application.properties`
-2. This ms calls the **Application MS** and **Deal MS** endpoints. 
-By default, base URLs are:
-- `application.client.base-url=http://localhost:8080/application`
-- `deal.client.base-url=http://localhost:8081/deal`
+3. This ms calls the **Deal MS** endpoints.
+   By default, base URL: `deal.client.base-url=http://localhost:8081/deal`
 
 ### Quick Start
 
