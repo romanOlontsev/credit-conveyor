@@ -3,8 +3,7 @@ name: Conveyor CI with Maven
 on:
   push:
     branches:
-      - feature/devops/ci_cd_settings
-      - develop
+      - feature/devops/**
     paths:
       - 'conveyor/**'
   pull_request:
