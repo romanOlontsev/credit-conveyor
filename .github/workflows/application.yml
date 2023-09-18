@@ -5,8 +5,8 @@ on:
     paths:
       - 'application/**'
   pull_request:
-    paths:
-      - 'application/**'
+    branches:
+      - develop
 
 permissions:
   packages: write
