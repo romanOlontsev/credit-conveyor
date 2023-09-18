@@ -2,13 +2,9 @@ name: Application CI with Maven
 
 on:
   push:
-    branches:
-      - '**/application/**'
     paths:
       - 'application/**'
   pull_request:
-    branches:
-      - '**/application/**'
     paths:
       - 'application/**'
 
