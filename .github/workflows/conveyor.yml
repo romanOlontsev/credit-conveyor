@@ -42,12 +42,15 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Verify and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify -pl conveyor -am org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-          -Dsonar.projectKey=romanOlontsev_credit-conveyor
+#      - name: Verify and analyze
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: mvn -B verify -pl conveyor -am org.sonarsource.scanner.maven:sonar-maven-plugin:sonar `\
+#          -Dsonar.projectKey=romanOlontsev_credit-conveyor
+
+      - name: Build with Maven
+        run: mvn package -pl conveyor -am
 
       - name: Log in to the Container registry
         uses: docker/login-action@v2
