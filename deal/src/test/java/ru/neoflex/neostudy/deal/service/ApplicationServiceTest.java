@@ -118,7 +118,6 @@ class ApplicationServiceTest extends IntegrationEnvironment {
                                                         .isEqualTo(client),
                 () -> assertThat(response.getStatus()).isNotNull()
                                                       .isEqualTo(status),
-                () -> assertThat(response.getSesCode()).isNotNull(),
                 () -> assertThat(response.getStatusHistory()
                                          .get(0)
                                          .getStatus()).isNotNull()

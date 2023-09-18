@@ -28,6 +28,8 @@
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <lombok.version>1.18.28</lombok.version>
         <testcontainers.version>1.18.3</testcontainers.version>
+        <sonar.organization>romanolontsev</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencyManagement>
         <dependencies>

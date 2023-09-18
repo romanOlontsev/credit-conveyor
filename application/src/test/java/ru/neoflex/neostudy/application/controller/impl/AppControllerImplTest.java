@@ -74,6 +74,35 @@ class AppControllerImplTest {
                .andExpect(jsonPath("$", hasSize(1)))
                .andExpect(jsonPath("$[0].term", is(offers.get(0)
                                                          .getTerm())));
+    }@Test
+    void createApplication_shouldReturnLoanList_middleNameIsNull() throws Exception {
+        LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
+                                                                        .amount(BigDecimal.valueOf(100000))
+                                                                        .term(6)
+                                                                        .firstName("test")
+                                                                        .lastName("test")
+                                                                        .middleName(null)
+                                                                        .email("man@dog.con")
+                                                                        .birthDate(LocalDate.now()
+                                                                                            .minusYears(25))
+                                                                        .passportSeries("1234")
+                                                                        .passportNumber("123456")
+                                                                        .build();
+        List<LoanOfferDTO> offers = List.of(LoanOfferDTO.builder()
+                                                        .term(6)
+                                                        .build());
+
+
+        when(service.createApplication(any())).thenReturn(offers);
+
+        mockMvc.perform(post("/application")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(requestDTO))
+                                .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", hasSize(1)))
+               .andExpect(jsonPath("$[0].term", is(offers.get(0)
+                                                         .getTerm())));
     }
 
     @Test
@@ -320,37 +349,6 @@ class AppControllerImplTest {
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
                              .isEqualTo("lastName: The lastname must contain from 2 to 30 latin characters");
-    }
-
-    @Test
-    void createApplication_shouldThrowMethodArgumentNotValidException_middleNameIsNull() throws Exception {
-        LoanApplicationRequestDTO requestDTO = LoanApplicationRequestDTO.builder()
-                                                                        .amount(BigDecimal.valueOf(100000))
-                                                                        .term(6)
-                                                                        .firstName("test")
-                                                                        .lastName("test")
-                                                                        .email("man@dog.con")
-                                                                        .birthDate(LocalDate.now()
-                                                                                            .minusYears(25))
-                                                                        .passportSeries("1234")
-                                                                        .passportNumber("123456")
-                                                                        .build();
-
-        MockHttpServletResponse response =
-                mockMvc.perform(post("/application")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(objectMapper.writeValueAsString(requestDTO))
-                                        .accept(MediaType.APPLICATION_JSON))
-                       .andExpect(status().isBadRequest())
-                       .andExpect(result -> assertTrue(
-                               result.getResolvedException() instanceof MethodArgumentNotValidException))
-                       .andReturn()
-                       .getResponse();
-        ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
-        assertThat(readValue).isNotNull()
-                             .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
-                                                "latin characters");
     }
 
     @Test
