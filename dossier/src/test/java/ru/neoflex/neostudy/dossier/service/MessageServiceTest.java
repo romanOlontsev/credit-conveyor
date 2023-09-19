@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import ru.neoflex.neostudy.dossier.exception.EmailMessageException;
 import ru.neoflex.neostudy.dossier.model.dto.ApplicationDTO;
 import ru.neoflex.neostudy.dossier.model.request.EmailMessage;
@@ -69,6 +70,7 @@ class MessageServiceTest {
     @Test
     @SneakyThrows
     void listenSendDocumentsTopic_shouldSendEmailOnce_conversionSuccessful() {
+        ReflectionTestUtils.setField(messageService, "documentPath", "%s");
         EmailMessage message = EmailMessage.builder()
                                            .address("test")
                                            .applicationId(1L)
