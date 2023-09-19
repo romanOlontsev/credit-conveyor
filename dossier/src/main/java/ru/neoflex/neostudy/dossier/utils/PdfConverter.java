@@ -2,6 +2,7 @@ package ru.neoflex.neostudy.dossier.utils;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.W3CDom;
 import org.jsoup.nodes.Document;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDate;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class PdfConverter {
@@ -34,13 +36,16 @@ public class PdfConverter {
 
     private void generatePdf(String htmlName, Document xhtml, Long applicationId) throws IOException {
         String pdfOutput = String.format(outputPath, htmlName, applicationId);
+        log.info("Flag0: "+pdfOutput);
         File outputPdf = new File(pdfOutput);
         try (OutputStream os = new FileOutputStream(outputPdf)) {
+            log.info("Flag1: file created");
             PdfRendererBuilder builder = new PdfRendererBuilder();
             builder.withUri(pdfOutput);
             builder.toStream(os);
             builder.withW3cDocument(new W3CDom().fromJsoup(xhtml), "/");
             builder.run();
+            log.info("Flag1: sec");
         }
     }
 
