@@ -26,6 +26,9 @@ public class MessageService {
     @Value("${gateway.client.base-url}")
     private String baseUrl;
 
+    @Value("${document.output-path}")
+    private String documentPath;
+
     @KafkaListener(topics = "finish-registration")
     public void listenFinishRegistrationTopic(EmailMessage emailMessage) {
         ThymeleafAttribute attribute = new ThymeleafAttribute();
@@ -67,7 +70,7 @@ public class MessageService {
         Long applicationId = emailMessage.getApplicationId();
         String url = String.format(baseUrl + "/document/%d/sign", applicationId);
         attribute.setUrl(url);
-        String attachment = String.format("dossier/src/main/resources/document/credit-terms-%d.pdf", applicationId);
+        String attachment = String.format(documentPath, applicationId);
         emailService.sendEmail(emailMessage.getAddress(), subject, attribute, attachment);
         log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }

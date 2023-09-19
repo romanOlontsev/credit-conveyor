@@ -24,7 +24,7 @@ import java.time.LocalDate;
 public class PdfConverter {
 
     @Value("${document.output-path}")
-    private String outputPath;
+    private String documentPath;
 
     private final TemplateEngine templateEngine;
 
@@ -35,7 +35,7 @@ public class PdfConverter {
     }
 
     private void generatePdf(String htmlName, Document xhtml, Long applicationId) throws IOException {
-        String pdfOutput = String.format(outputPath, htmlName, applicationId);
+        String pdfOutput = String.format(documentPath, htmlName, applicationId);
         log.info("Flag0: "+pdfOutput);
         File outputPdf = new File(pdfOutput);
         try (OutputStream os = new FileOutputStream(outputPdf)) {
