@@ -1,0 +1,111 @@
+version: "3.8"
+services:
+  postgresql:
+    container_name: postgres
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=credit_app_db
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  liquibase-migrations:
+    image: liquibase/liquibase:4.18
+    depends_on:
+      - postgresql
+    command:
+      - --hub-mode=off
+      - --changelog-file=master.xml
+      - --driver=org.postgresql.Driver
+      - --url=jdbc:postgresql://postgresql:5432/credit_app_db
+      - --username=root
+      - --password=root
+      - update
+    volumes:
+      - ./migrations:/liquibase/changelog
+    networks:
+      - backend
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - backend
+
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - backend
+
+  dossier:
+    image: ghcr.io/romanolontsev/credit-conveyor/dossier:latest
+    depends_on:
+      - kafka
+      - deal
+    environment:
+      - spring_kafka_bootstrap_servers=kafka:29092
+      - gateway_client_base_url=http://iLoveJhenya:8033
+      - deal_client_base_url=http://deal:8081/deal/admin
+      - document_output_path=tmp/%s-%d.pdf
+    networks:
+      - backend
+
+  application:
+    image: ghcr.io/romanolontsev/credit-conveyor/application:latest
+    depends_on:
+      - deal
+    environment:
+      - deal_client_base_url=http://deal:8081/deal
+    networks:
+      - backend
+
+  deal:
+    image: ghcr.io/romanolontsev/credit-conveyor/deal:latest
+    depends_on:
+      - conveyor
+      - postgresql
+      - liquibase-migrations
+      - kafka
+    environment:
+      - conveyor_client_base_url=http://conveyor:8082/conveyor
+      - spring_datasource_url=jdbc:postgresql://postgresql:5432/credit_app_db
+      - spring_kafka_bootstrap_servers=kafka:29092
+    networks:
+      - backend
+
+  conveyor:
+    image: ghcr.io/romanolontsev/credit-conveyor/conveyor:latest
+    networks:
+      - backend
+
+  gateway:
+    image: ghcr.io/romanolontsev/credit-conveyor/gateway:latest
+    depends_on:
+      - deal
+      - application
+    ports:
+      - '8080:8079'
+    environment:
+      - application_client_base_url=http://application:8080/application
+      - deal_client_base_url=http://deal:8081/deal
+    networks:
+      - backend
+
+volumes:
+  postgres:
+networks:
+  backend:
