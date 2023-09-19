@@ -101,5 +101,5 @@ jobs:
 
       - name: Build and push the docker image
         run: |
-          docker build -t ghcr.io/romanolontsev/credit-conveyor/dossier:latest --no-cache --build-arg LOGIN=${{ secrets.MAIL_LOGIN }} --build-arg PASS=${{ secrets.MAIL_PASS }} dossier/.
+          docker build -t ghcr.io/romanolontsev/credit-conveyor/dossier:latest --build-arg LOGIN=${{ secrets.MAIL_LOGIN }} --build-arg PASS=${{ secrets.MAIL_PASS }} dossier/.
           docker push ghcr.io/romanolontsev/credit-conveyor/dossier:latest

@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.helper.W3CDom;
 import org.jsoup.nodes.Document;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -20,6 +21,9 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class PdfConverter {
 
+    @Value("${document.output-path}")
+    private String outputPath;
+
     private final TemplateEngine templateEngine;
 
     public void execute(String htmlName, ApplicationDTO applicationInfo, Long applicationId) throws IOException {
@@ -29,7 +33,7 @@ public class PdfConverter {
     }
 
     private void generatePdf(String htmlName, Document xhtml, Long applicationId) throws IOException {
-        String pdfOutput = String.format("dossier/src/main/resources/document/%s-%d.pdf", htmlName, applicationId);
+        String pdfOutput = String.format(outputPath, htmlName, applicationId);
         File outputPdf = new File(pdfOutput);
         try (OutputStream os = new FileOutputStream(outputPdf)) {
             PdfRendererBuilder builder = new PdfRendererBuilder();
