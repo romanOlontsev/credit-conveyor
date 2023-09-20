@@ -29,19 +29,13 @@ The application can be run locally, the requirements for setup are listed below.
 
 #### Properties
 
-1. Application will run by default on port `8081`.
-   Configure the port by changing `server.port` in `application.properties`.
+For module settings, see the **readme.md** of the corresponding microservices.
 
-2. This MS calls the **Conveyor MS** endpoints.
-   By default, base URL is `conveyor.client.base-url=http://localhost:8082/conveyor`.
-
-3. [PostgreSQL](https://www.postgresql.org/docs/) is used as db by default.
-    - [Schema](https://github.com/romanOlontsev/credit-conveyor/blob/develop/migrations/credit-app-schema.sql)
-    - Properties:
-        - `spring.datasource.url=jdbc:postgresql://localhost:8032/credit_app_db`
-        - `spring.datasource.username=root`
-        - `spring.datasource.password=root`
-4. Kafka bootstrap servers by default on port `29092`.
+- [Gateway MS](gateway/readme.md)
+- [Application MS](application/readme.md)
+- [Deal MS](deal/readme.md)
+- [Conveyor MS](conveyor/readme.md)
+- [Dossier MS](dossier/readme.md)
 
 ### Quick Start
 
