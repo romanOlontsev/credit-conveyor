@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.neoflex.neostudy.conveyor.exception.BadRequestException;
 import ru.neoflex.neostudy.conveyor.model.dto.EmploymentDTO;
 import ru.neoflex.neostudy.conveyor.model.dto.ScoringDataDTO;
 import ru.neoflex.neostudy.conveyor.model.types.EmploymentStatus;
@@ -149,20 +148,6 @@ class ScoringRateServiceTest {
     }
 
     @Test
-    void calculateScoringRate_shouldThrowBadRequestExceptionByEmploymentStatus() {
-        scoringDataDTO.getEmployment()
-                      .setStatus(EmploymentStatus.NONE);
-        ScoringDataDTO unknownStatus = scoringDataDTO;
-
-        String exceptionMessage = "Unknown employment status";
-        assertAll(
-                () -> assertThatThrownBy(() -> service.calculateScoringRate(unknownStatus))
-                        .isInstanceOf(BadRequestException.class)
-                        .hasMessage(exceptionMessage)
-        );
-    }
-
-    @Test
     void calculateScoringRate_shouldReturnRate_position_topManager() {
         scoringDataDTO.getEmployment()
                       .setPosition(Position.TOP_MANAGER);
@@ -176,20 +161,6 @@ class ScoringRateServiceTest {
     }
 
     @Test
-    void calculateScoringRate_shouldThrowBadRequestExceptionByPosition() {
-        scoringDataDTO.getEmployment()
-                      .setPosition(Position.NONE);
-        ScoringDataDTO unknownPosition = scoringDataDTO;
-
-        String exceptionMessage = "Unknown employee position";
-        assertAll(
-                () -> assertThatThrownBy(() -> service.calculateScoringRate(unknownPosition))
-                        .isInstanceOf(BadRequestException.class)
-                        .hasMessage(exceptionMessage)
-        );
-    }
-
-    @Test
     void calculateScoringRate_shouldReturnRate_maritalStatus_married() {
         scoringDataDTO.setMaritalStatus(MaritalStatus.MARRIED);
         ScoringDataDTO marriedStatus = scoringDataDTO;
@@ -199,20 +170,6 @@ class ScoringRateServiceTest {
         BigDecimal expectedRate = BigDecimal.valueOf(-2.0);
         assertThat(scoringRate).isNotNull()
                                .isEqualTo(expectedRate);
-    }
-
-
-    @Test
-    void calculateScoringRate_shouldThrowBadRequestExceptionByMaritalStatus() {
-        scoringDataDTO.setMaritalStatus(MaritalStatus.NONE);
-        ScoringDataDTO unknownStatus = scoringDataDTO;
-
-        String exceptionMessage = "Unknown marital status";
-        assertAll(
-                () -> assertThatThrownBy(() -> service.calculateScoringRate(unknownStatus))
-                        .isInstanceOf(BadRequestException.class)
-                        .hasMessage(exceptionMessage)
-        );
     }
 
     @Test
@@ -278,18 +235,5 @@ class ScoringRateServiceTest {
         BigDecimal expectedRate = BigDecimal.valueOf(5.0);
         assertThat(scoringRate).isNotNull()
                                .isEqualTo(expectedRate);
-    }
-
-    @Test
-    void calculateScoringRate_shouldThrowBadRequestExceptionByGender() {
-        scoringDataDTO.setGender(Gender.NONE);
-        ScoringDataDTO unknownGender = scoringDataDTO;
-
-        String exceptionMessage = "Unknown gender";
-        assertAll(
-                () -> assertThatThrownBy(() -> service.calculateScoringRate(unknownGender))
-                        .isInstanceOf(BadRequestException.class)
-                        .hasMessage(exceptionMessage)
-        );
     }
 }

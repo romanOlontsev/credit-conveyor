@@ -26,6 +26,12 @@ public class MessageService {
     @Value("${gateway.client.base-url}")
     private String baseUrl;
 
+    @Value("${document.output-path}")
+    private String documentPath;
+
+    private final static String HTML_NAME = "credit-terms";
+
+
     @KafkaListener(topics = "finish-registration")
     public void listenFinishRegistrationTopic(EmailMessage emailMessage) {
         ThymeleafAttribute attribute = new ThymeleafAttribute();
@@ -67,7 +73,7 @@ public class MessageService {
         Long applicationId = emailMessage.getApplicationId();
         String url = String.format(baseUrl + "/document/%d/sign", applicationId);
         attribute.setUrl(url);
-        String attachment = String.format("dossier/src/main/resources/document/credit-terms-%d.pdf", applicationId);
+        String attachment = String.format(documentPath, HTML_NAME, applicationId);
         emailService.sendEmail(emailMessage.getAddress(), subject, attribute, attachment);
         log.info("Message received to {} from topic {}", emailMessage.getAddress(), emailMessage.getTheme());
     }
@@ -107,7 +113,7 @@ public class MessageService {
         dealClient.updateApplicationStatus(emailMessage.getApplicationId());
         ApplicationDTO applicationDTO = dealClient.getApplicationById(emailMessage.getApplicationId());
         try {
-            pdfConverter.execute("credit-terms", applicationDTO, emailMessage.getApplicationId());
+            pdfConverter.execute(HTML_NAME, applicationDTO, emailMessage.getApplicationId());
             log.info("Pdf created for applicationId={}", emailMessage.getApplicationId());
         } catch (IOException e) {
             throw new EmailMessageException("Error generating pdf documents for applicationId=" +

@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 import ru.neoflex.neostudy.deal.model.response.EmailMessage;
-//  TODO
-//      add logs
+
 public class EmailMessageSerializer implements Serializer<EmailMessage> {
 
     @Override

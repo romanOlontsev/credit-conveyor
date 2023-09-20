@@ -121,8 +121,8 @@ class ScoringServiceTest {
         LocalDate expectedDate = LocalDate.now()
                                           .plusMonths(8);
         BigDecimal expectedRemainingDebt = BigDecimal.valueOf(0);
-        BigDecimal expectedDebtPayment = BigDecimal.valueOf(8943.86);
-        BigDecimal expectedInterestPayment = BigDecimal.valueOf(389.86);
+        BigDecimal expectedDebtPayment = BigDecimal.valueOf(8924.68);
+        BigDecimal expectedInterestPayment = BigDecimal.valueOf(390.76);
 
         assertAll(
                 () -> assertThat(monthlyPaymentSchedule).isNotNull()

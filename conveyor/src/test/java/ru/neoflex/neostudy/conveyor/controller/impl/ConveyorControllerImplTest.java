@@ -697,6 +697,50 @@ class ConveyorControllerImplTest {
     }
 
     @Test
+    void calculateCredit_shouldReturnCreditDTO_middleNameIsNull() throws Exception {
+        EmploymentDTO employmentDTO = EmploymentDTO.builder()
+                                                   .status(EmploymentStatus.SELF_EMPLOYED)
+                                                   .employerInn("1234457")
+                                                   .salary(BigDecimal.valueOf(500000))
+                                                   .position(Position.MIDDLE_MANAGER)
+                                                   .workExperienceTotal(15)
+                                                   .workExperienceCurrent(5)
+                                                   .build();
+        ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
+                                                      .amount(BigDecimal.valueOf(100000))
+                                                      .term(6)
+                                                      .firstName("test")
+                                                      .lastName("test")
+                                                      .gender(Gender.FEMALE)
+                                                      .birthDate(LocalDate.now()
+                                                                          .minusYears(25))
+                                                      .passportSeries("1234")
+                                                      .passportNumber("123456")
+                                                      .passportIssueDate(LocalDate.now()
+                                                                                  .minusYears(5))
+                                                      .passportIssueBranch("test")
+                                                      .maritalStatus(MaritalStatus.MARRIED)
+                                                      .dependentAmount(1)
+                                                      .employment(employmentDTO)
+                                                      .account("test")
+                                                      .isInsuranceEnabled(false)
+                                                      .isSalaryClient(false)
+                                                      .build();
+
+        CreditDTO creditDTO = CreditDTO.builder()
+                                       .term(12)
+                                       .build();
+        when(service.calculateCredit(any())).thenReturn(creditDTO);
+
+        mockMvc.perform(post("/conveyor/calculation")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(scoringDataDTO))
+                                .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.term", is(creditDTO.getTerm())));
+    }
+
+    @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_amountIsNull() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .status(EmploymentStatus.SELF_EMPLOYED)
@@ -1079,54 +1123,6 @@ class ConveyorControllerImplTest {
     }
 
     @Test
-    void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNull() throws Exception {
-        EmploymentDTO employmentDTO = EmploymentDTO.builder()
-                                                   .status(EmploymentStatus.SELF_EMPLOYED)
-                                                   .employerInn("1234457")
-                                                   .salary(BigDecimal.valueOf(500000))
-                                                   .position(Position.MIDDLE_MANAGER)
-                                                   .workExperienceTotal(15)
-                                                   .workExperienceCurrent(5)
-                                                   .build();
-        ScoringDataDTO scoringDataDTO = ScoringDataDTO.builder()
-                                                      .amount(BigDecimal.valueOf(10000))
-                                                      .term(6)
-                                                      .firstName("test")
-                                                      .lastName("test")
-                                                      .gender(Gender.FEMALE)
-                                                      .birthDate(LocalDate.now()
-                                                                          .minusYears(25))
-                                                      .passportSeries("1234")
-                                                      .passportNumber("123456")
-                                                      .passportIssueDate(LocalDate.now()
-                                                                                  .minusYears(5))
-                                                      .passportIssueBranch("test")
-                                                      .maritalStatus(MaritalStatus.MARRIED)
-                                                      .dependentAmount(1)
-                                                      .employment(employmentDTO)
-                                                      .account("test")
-                                                      .isInsuranceEnabled(false)
-                                                      .isSalaryClient(false)
-                                                      .build();
-
-        MockHttpServletResponse response =
-                mockMvc.perform(post("/conveyor/calculation")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(objectMapper.writeValueAsString(scoringDataDTO))
-                                        .accept(MediaType.APPLICATION_JSON))
-                       .andExpect(status().isBadRequest())
-                       .andExpect(result -> assertTrue(
-                               result.getResolvedException() instanceof MethodArgumentNotValidException))
-                       .andReturn()
-                       .getResponse();
-        ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
-        assertThat(readValue).isNotNull()
-                             .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                                "Latin characters");
-    }
-
-    @Test
     void calculateCredit_shouldThrowMethodArgumentNotValidException_middleNameIsNotInRegex() throws Exception {
         EmploymentDTO employmentDTO = EmploymentDTO.builder()
                                                    .status(EmploymentStatus.SELF_EMPLOYED)
@@ -1171,8 +1167,8 @@ class ConveyorControllerImplTest {
         ApiErrorResponse readValue = objectMapper.readValue(response.getContentAsString(), ApiErrorResponse.class);
         assertThat(readValue).isNotNull()
                              .extracting(ApiErrorResponse::getDescription)
-                             .isEqualTo("middleName: The middle name must be empty or contain from 2 to 30 " +
-                                                "Latin characters");
+                             .isEqualTo("middleName: The middle name must be null or contain from 2 to 30 " +
+                                     "latin characters");
     }
 
     @Test
